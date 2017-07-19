@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="resources/css/jqgrid/ui.jqgrid.css" />
 <!-- jqGrid主题包-非必要 -->
 <!-- 在jqgrid/css/css这个目录下还有其他的主题包，可以尝试更换看效果 -->
-<link rel="stylesheet" href="resources/css/jqgrid/jquery-ui-1.8.16.custom.css" />
+<!-- <link rel="stylesheet" href="resources/css/jqgrid/jquery-ui-1.8.16.custom.css" /> -->
 <link rel="stylesheet" href="resources/css/jquery-ui/jquery-ui.min.css" />
 
 <script type="text/javascript" src="resources/js/jquery/jquery-3.2.1.js"></script>
@@ -23,130 +23,56 @@
 <script src="resources/js/tooltip.js"></script>
 	
 <style type="text/css">
-
-/* #wrapper {margin: 4px 10px 4px 10px;}
-#wrapper div{vertical-align:bottom;}
-#wrapper div {vertical-align:bottom;}
-
-#imgListDiv {display: inline-block; height:900px;}
-
-#imgImportDiv {display: inline-block; height:900px;}
- */
-body{
+	#wrapper {margin: 4px 10px 4px 10px;}
+	#wrapper div{vertical-align:middle;}
+	#naviDiv {display: inline-block; height:700px;}
+	#bodyDiv {display: inline-block; height:700px;}
+	body{
 		font-family: "Trebuchet MS", sans-serif;
 		margin: 50px;
 	}
-	.demoHeaders {
+	.headers {
 		margin-top: 2em;
 	}
-	#dialog-link {
-		padding: .4em 1em .4em 20px;
-		text-decoration: none;
-		position: relative;
-	}
-	#dialog-link span.ui-icon {
-		margin: 0 5px 0 0;
-		position: absolute;
-		left: .2em;
-		top: 50%;
-		margin-top: -8px;
-	}
-	#icons {
-		margin: 0;
-		padding: 0;
-	}
-	#icons li {
-		margin: 2px;
-		position: relative;
-		padding: 4px 0;
-		cursor: pointer;
-		float: left;
-		list-style: none;
-	}
-	#icons span.ui-icon {
-		float: left;
-		margin: 0 4px;
-	}
-	.fakewindowcontain .ui-widget-overlay {
-		position: absolute;
-	}
-	select {
-		width: 200px;
-	}
+	
+  .ui-tabs-vertical { width: 100em; }
+  .ui-tabs-vertical .ui-tabs-nav { padding: .2em .1em .2em .2em; float: left; width: 12em; }
+  .ui-tabs-vertical .ui-tabs-nav li { clear: left; width: 100%; border-bottom-width: 1px !important; border-right-width: 0 !important; margin: 0 -1px .2em 0; }
+  .ui-tabs-vertical .ui-tabs-nav li a { display:block; }
+  .ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active { padding-bottom: 0; padding-right: .1em; border-right-width: 1px; border-right-width: 1px; }
+  .ui-tabs-vertical .ui-tabs-panel { padding: 1em; float: right; width: 85em;}
 </style>
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		//initWidow();
-		$( "#accordion" ).accordion();
-		
-		var availableTags = [
-			"ActionScript",
-			"AppleScript",
-			"Asp",
-			"BASIC",
-			"C",
-			"C++",
-			"Clojure",
-			"COBOL",
-			"ColdFusion",
-			"Erlang",
-			"Fortran",
-			"Groovy",
-			"Haskell",
-			"Java",
-			"JavaScript",
-			"Lisp",
-			"Perl",
-			"PHP",
-			"Python",
-			"Ruby",
-			"Scala",
-			"Scheme"
-		];
-		$( "#autocomplete" ).autocomplete({
-			source: availableTags
-		});
+		//$( "#selectable" ).selectable();
+		//$( "#tabs" ).tabs();
+		$( "#tabs" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
+	    $( "#tabs li" ).removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );
+		initWidow();
 	});
 	
 	
 	function initWidow() {
-		var width = $(document.body).width();
-		var mergeWidth = 32;
-		var importWidth = width * 0.35;
-		var bodyWidth = width - mergeWidth - importWidth;
-		$("#imgImportDiv").css("width", importWidth + "px");
-		$("#imgListDiv").css("width", bodyWidth + "px");
+		$("#tabs ul li a").width($("#tabs ul li").width());
 	}
 </script>
 </head>
 <body>
-			<h1>酷比乐图片私服</h1>
-<div class="ui-widget">
-	<p>This page demonstrates the widgets and theme you selected in Download Builder. Please make sure you are using them with a compatible jQuery version.</p>
+	<h1>酷比乐图片私服</h1>
+	<div class="ui-widget">
+		<p>致力于为全人类提供图片存储服务，但现阶段先努力为自己服务！</p>
+	</div>
+	<div id="tabs">
+		<ul>
+			<li><a href="#tabs-1">图片上传</a></li>
+			<li><a href="#tabs-2">图片查询</a></li>
+		</ul>
+		<div id="tabs-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+		<div id="tabs-2">Phasellus mattis tincidunt nibh. Cras orci urna, blandit id, pretium vel, aliquet ornare, felis. Maecenas scelerisque sem non nisl. Fusce sed lorem in enim dictum bibendum.</div>
+	</div>
+		
+	
 </div>
-
-<h1>YOUR COMPONENTS:</h1>
-			<h2 class="demoHeaders">Accordion</h2>
-			<div id="accordion">
-				<h3>First</h3>
-				<div>Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.</div>
-				<h3>Second</h3>
-				<div>Phasellus mattis tincidunt nibh.</div>
-				<h3>Third</h3>
-				<div>Nam dui erat, auctor a, dignissim quis.</div>
-			</div>
-			
-			<h2 class="demoHeaders">Autocomplete</h2>
-<div>
-	<input id="autocomplete" title="type &quot;a&quot;">
-</div>
-	<!-- <div id="wrapper">
-		</div>
-		<div id="imgListDiv">
-		<div id="imgImportDiv">
-			<span id="title"><strong>图片上传</strong></span>
-		</div>
-	</div> -->
 </body>
 </html>
