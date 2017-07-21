@@ -4,27 +4,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<jsp:include page="/main/common.jsp" flush="true"></jsp:include>
+<script src="${scriptPath}/page_upload.js" type="text/javascript"></script>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>酷比乐图片服务</title>
-
-<!-- jqGrid组件基础样式包-必要 -->
-<link rel="stylesheet" href="resources/css/jqgrid/ui.jqgrid.css" />
-<!-- jqGrid主题包-非必要 -->
-<!-- 在jqgrid/css/css这个目录下还有其他的主题包，可以尝试更换看效果 -->
-<!-- <link rel="stylesheet" href="resources/css/jqgrid/jquery-ui-1.8.16.custom.css" /> -->
-<link rel="stylesheet" href="resources/css/jquery-ui/jquery-ui.min.css" />
-
-<script type="text/javascript" src="resources/js/jquery/jquery-3.2.1.js"></script>
-<script type="text/javascript"
-	src="resources/js/jquery/i18n/grid.locale-cn.js"></script>
-<script type="text/javascript"
-	src="resources/js/jquery/jquery.jqGrid.src.js"></script>
-<script type="text/javascript"
-	src="resources/js/jquery/jquery.jqGrid.src.js"></script>
-<script type="text/javascript"
-	src="resources/js/jquery/jquery-ui.min.js"></script>
-
-<script src="resources/js/tooltip.js"></script>
 
 <style type="text/css">
 #wrapper {
@@ -99,17 +83,16 @@ body {
 <script type="text/javascript">
 	$(document).ready(function() {
 		var $uploadGrid = $("#uploadGrid");
-		debugger
 		initWidow();
-		initUploadGrid($uploadGrid);
+		initTestDatas();
 	});
 
 	function openImages() {
-		alert_sure("打开文件","提示");
+		SPopupBox.alert("打开文件","提示");
 	}
 
 	function uploadImages() {
-		alert_sure("上传文件","提示");
+		SPopupBox.confirm("上传文件","系统提示");
 	}
 
 	function initWidow() {
@@ -130,27 +113,7 @@ body {
 		$("#button-upload-images").click(function() {
 			uploadImages();
 		});
-		$( "#dialog" ).dialog({
-			autoOpen: false,
-			width: 400,
-			buttons: [
-				{
-					text: "确定",
-					click: function() {
-						$( this ).dialog( "close" );
-					}
-				}
-			]
-		});
 		
-	}
-
-	function alert_sure(message,title) {
-		if (title) {
-			$("#dialog").dialog({title:title});
-		}
-		$("#dialog p").text(message);
-		$("#dialog").dialog("open");
 	}
 	
 	function changeImage(name,url) {
@@ -158,73 +121,6 @@ body {
 		$("#showImage").attr('title',name); 
 	}
 	
-	function initUploadGrid($table){
-		$table.jqGrid({
-			url : 'resources/data/imageData.json',
-			mtype : 'POST',
-			loadonce : false,
-			datatype : 'json',
-			shrinkToFit : true,
-			rownumbers: true,
-			width: 1000,
-			colNames : [ '文件名','路径','上传进度','操作','远程路径'],
-			colModel : [ 
-						 {name : 'name', align : 'center',hidden: false,sortable : false, width: 150},
-						 {name : 'localPath', align : 'center',hidden: false,sortable : false, width: 200},
-						 {name : 'process', align : 'left',hidden: false,sortable : false, width: 150},
-						 {name : 'operator', align : 'center',hidden: false,sortable : false, width: 150},
-						 {name : 'remotePath', align : 'center',hidden: true,sortable : false, width: 150}
-			           ],
-			rowNum : 10,
-			rowList : [ 10, 20, 30 ],
-			pager : '#uploadGridPager',
-			gridview : true,
-			postData:{
-				//alarmId:'${alarm.alarmId}'
-			},
-			viewrecords : true,
-			jsonReader : {
-				root : 'data',
-				page : 'page',
-				total : 'total',
-				records : 'records',
-				repeatitems : false,
-				userdata: 'userData'
-			},
-			gridComplete : function() {
-				var indexs = $table.jqGrid('getDataIDs');
-				for ( var i = 0; i < indexs.length; i++) {
-					var rowId = indexs[i];
-					var currentRow = $table.jqGrid('getRowData', rowId);
-				}
-			},
-			loadComplete : function() {
-				
-			},
-			onPaging : function(pgButton) {
-				var curPage = $table.getGridParam('page'), totalPage = $table
-						.getGridParam('lastpage'), pageParam = curPage > totalPage ? totalPage
-						: curPage;
-				$table.setGridParam({
-					page : pageParam
-				});
-				return true;
-			},
-			prmNames : {
-				page : 'pageIndex',
-				rows : 'pageSize',
-				sort : 'sortName',
-				order : 'sortOrder',
-				search : '_search'
-			}
-		});
-		$table.on("click", 'tr[role="row"]', function() {
-			var remotePath =  $(this).find('td')[5].title;
-			var name =  $(this).find('td')[1].title;
-			changeImage(name,remotePath);
-			//alert_sure(remotePath);
-		})
-	}
 </script>
 </head>
 <body>
@@ -240,7 +136,7 @@ body {
 			<li><a href="#tabs-2">我的匹克切</a></li>
 		</ul>
 		<div id="tabs-1">
-			<img id="showImage" alt="图片展示" src="#" title="请选择需要展示的图片">
+			<img id="showImage" alt="无图片" title="请选择需要展示的图片">
 			<!-- <fieldset> -->
 			<div class="fieldset">
 				<!-- <legend>图片上传</legend> -->
@@ -248,15 +144,17 @@ body {
 				<button id="button-upload-images">图片上传</button>
 			<!-- </fieldset> -->
 			</div>
-			<table id="uploadGrid"></table>
+			<table id="uploadGrid" class="lztable simple">
+				<thead>
+				<tr><th></th><th>图片文件名</th><th>本地路径</th><th>上传进度</th><th>操作</th></tr>
+				</thead>
+				<tbody></tbody>
+			</table>
 			<div id="uploadGridPager"></div>
 		</div>
 		<div id="tabs-2">
 			<h2>图片查询</h2>
 		</div>
-	</div>
-	<div id="dialog" title="系统提示">
-		<p></p>
 	</div>
 </body>
 </html>

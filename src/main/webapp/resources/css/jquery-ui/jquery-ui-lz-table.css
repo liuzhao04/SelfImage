@@ -1,0 +1,32 @@
+table.simple {  
+    border-collapse: collapse;  
+    width: 50%;  
+    font-size: 1em;  
+}  
+  
+table.simple th {  
+    background: #007eee;  
+    color: #fff;  
+    font-weight: normal;  
+    text-align: center;  
+    border-right: 1px solid #fff;  
+    line-height: 1.2;  
+}  
+  
+table.simple td {  
+    padding: 6px 11px;  
+    border-bottom: 1px solid #eeeeff;  
+    vertical-align: top;  
+}  
+  
+table.simple td * {  
+    padding: 6px 11px;  
+}  
+  
+table.simple tr.alt td {  
+    background: #ecf6fc;  
+}  
+  
+table.simple tr.over td {  
+    background: #bcd4ec;  
+} 
