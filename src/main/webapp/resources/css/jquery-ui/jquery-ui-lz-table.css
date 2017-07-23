@@ -19,9 +19,9 @@ table.simple td {
     vertical-align: top;  
 }  
   
-table.simple td * {  
+/* table.simple td * {  
     padding: 6px 11px;  
-}  
+}   */
   
 table.simple tr.alt td {  
     background: #ecf6fc;  

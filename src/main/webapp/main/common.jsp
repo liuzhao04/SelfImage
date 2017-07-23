@@ -19,13 +19,13 @@
 %>
 
 <!-- js 加载 -->
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<c:set var="ctx" value="${contextPath}" />
-<c:set var="browserName" value="<%=browserName%>" />
-<c:set var="cssPath" value="${contextPath}/resources/css" />
-<c:set var="scriptPath" value="${contextPath}/resources/js" />
-<c:set var="imagePath" value="${contextPath}/resources/images" />
-<c:set var="jspPath" value="${contextPath}/main" />
+<c:set var="contextPath" value="${pageContext.request.contextPath}" scope="session" />
+<c:set var="ctx" value="${contextPath}" scope="session" />
+<c:set var="browserName" value="<%=browserName%>" scope="session"/>
+<c:set var="cssPath" value="${contextPath}/resources/css" scope="session"/>
+<c:set var="scriptPath" value="${contextPath}/resources/js" scope="session"/>
+<c:set var="imagePath" value="${contextPath}/resources/images" scope="session"/>
+<c:set var="jspPath" value="${contextPath}/main" scope="session"/>
 
 <script src="${scriptPath}/jquery/jquery-3.2.1.js" type="text/javascript"></script>
 <script src="${scriptPath}/jquery/i18n/grid.locale-cn.js" type="text/javascript"></script>
@@ -38,7 +38,17 @@
 <script src="${scriptPath}/common/simple-popup-box.js" type="text/javascript"></script>
 <script src="${scriptPath}/common/simple-popup-box.js" type="text/javascript"></script>
 <script src="${scriptPath}/common/jquery-ui-lz-table.js" type="text/javascript"></script>
-<script>var JS_CTX = '${ctx}';</script>
+<script>
+var JS_CTX = '${ctx}';
+//获取当前网址，如： http://localhost:8080/Tmall/index.jsp 
+var curWwwPath=window.document.location.href; 
+//获取主机地址之后的目录如：/Tmall/index.jsp 
+var pathName=window.document.location.pathname; 
+var pos=curWwwPath.indexOf(pathName); 
+//获取主机地址，如： http://localhost:8080 
+var JS_HOST=curWwwPath.substring(0,pos); 
+
+</script>
 
 <!-- meta 加载 -->
 <%

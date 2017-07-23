@@ -24,7 +24,7 @@ public class UserController {
 	@Resource
 	private IUserSevice userService = null;
 
-	@RequestMapping("/iduser.action")
+	@RequestMapping("/iduser.do")
 	private String user(Locale locale, Model model) {
 		logger.info("Welcome user page! The client locale is {}.", locale);
 		User user = userService.getUserNameById(1);
