@@ -30,6 +30,18 @@ public class InputStreamSaveThread
 
     private String error;
     
+    private boolean hasSaveToDB = false;
+    
+    public boolean isHasSaveToDB()
+    {
+        return hasSaveToDB;
+    }
+
+    public void setHasSaveToDB(boolean hasSaveToDB)
+    {
+        this.hasSaveToDB = hasSaveToDB;
+    }
+
     public InputStreamSaveThread(InputStream is, String path)
     {
         this.stream = is;

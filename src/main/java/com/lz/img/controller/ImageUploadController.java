@@ -23,7 +23,7 @@ import com.lz.common.upload.InputStreamSaveThread;
 import com.lz.common.utils.BackGroupCache;
 import com.lz.common.utils.Md5Utils;
 import com.lz.img.pojo.ImageInfor;
-import com.lz.img.service.IUserSevice;
+import com.lz.img.service.IImageService;
 import com.lz.img.utils.ImageUploadUtils;
 import com.lz.img.utils.PropertiesUtils;
 
@@ -34,7 +34,7 @@ public class ImageUploadController
     private static final Logger logger = LoggerFactory.getLogger(ImageUploadController.class);
 
     @Resource
-    private IUserSevice userService = null;
+    private IImageService imageService = null;
 
     @Autowired
     private PropertiesUtils putils;
@@ -97,7 +97,7 @@ public class ImageUploadController
     @RequestMapping("/process.do")
     @ResponseBody
     @SuppressWarnings("unchecked")
-    public ResponseMessage submitProcess(@RequestParam( "batchId")String batchId)
+    public synchronized ResponseMessage submitProcess(@RequestParam( "batchId")String batchId)
     {
         ResponseMessage msg = new ResponseMessage();
         msg.setSuccess(true);
@@ -123,6 +123,11 @@ public class ImageUploadController
                 if (!th.isFinished())
                 {
                     uploadFinished = false;
+                }else {
+                    if(!th.isHasSaveToDB()) {
+                        imageService.insert(infor);
+                        th.setHasSaveToDB(true);
+                    }
                 }
             }
             

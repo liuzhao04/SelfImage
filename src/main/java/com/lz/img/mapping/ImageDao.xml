@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lz.img.dao.IImageDao">
+	<resultMap id="imageMap" type="com.lz.img.pojo.ImageInfor">
+		<id column="imageId" property="imageId" jdbcType="BIGINT" />
+		<result column="batchId" property="batchId" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="fileSize" property="fileSize" jdbcType="BIGINT" />
+		<result column="uploadSize" property="uploadSize" jdbcType="BIGINT" />
+		<result column="error" property="uploadSize" jdbcType="VARCHAR" />
+		<result column="remoteUrl" property="uploadSize" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="imageId">
+    	insert into IMG_IMAGE_INFORMATION(batchId,name,saveName,fileSize,uploadSize,error,remoteUrl) 
+    	values(#{batchId},#{name},#{saveName},#{fileSize},#{uploadSize},#{error},#{remoteUrl});
+	</insert>
+</mapper>  
