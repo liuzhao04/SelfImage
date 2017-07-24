@@ -29,7 +29,7 @@ public class ImageServiceImpl implements IImageService {
 
 	@Override
 	public Page list(ImageInfor imageInfor) {
-		List<ImageInfor> rs = dao.select(imageInfor);
+		List<ImageInfor> rs = dao.selectByPage(imageInfor);
 		Page page =  Page.threadLocal.get();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		for(Object ii : rs) {

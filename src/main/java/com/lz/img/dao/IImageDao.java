@@ -23,5 +23,5 @@ public interface IImageDao
      * 查询图片记录
      * @param imageInfor
      */
-	public List<ImageInfor> select(ImageInfor imageInfor);
+	public List<ImageInfor> selectByPage(ImageInfor imageInfor);
 }

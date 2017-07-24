@@ -10,105 +10,155 @@ import com.lz.common.page.Page;
  * @author Administrator
  * @version 1.0, 2017年7月23日
  */
-public class ResponseMessage implements Serializable{ 
-	private static final long serialVersionUID = -2867571757278640401L;
+public class ResponseMessage implements Serializable
+{
+    private static final long serialVersionUID = -2867571757278640401L;
 
-	private boolean success;
+    private boolean success;
 
-	private String message;
+    private String message;
 
-	private Object data;
+    private Object data;
 
-	private boolean isPage;
+    private boolean isPage;
 
-	private Integer pageIndex;
+    private Integer pageIndex;
 
-	private Integer pageSize;
+    private Integer pageSize;
 
-	private Integer count;
+    private Integer pageCount;
 
-	private Object userData;
-	
-	public ResponseMessage() {
-		setSuccess(true);
-	}
-	
-	public ResponseMessage(Page page) {
-		setSuccess(true);
-		setCount(page.getTotalCount());
-    	setPageIndex(page.getPageNo());
-    	setData(page.getPageSize());
-	}
+    private Integer count;
 
-	public Object getUserData() {
-		return userData;
-	}
+    private Object userData;
 
-	public void setUserData(Object userData) {
-		this.userData = userData;
-	}
+    public ResponseMessage()
+    {
+        setSuccess(true);
+    }
 
-	public boolean isSuccess() {
-		return success;
-	}
+    public ResponseMessage(Page page)
+    {
+        setSuccess(true);
+        setCount(page.getTotalCount());
+        setPageIndex(page.getPageNo());
+        setPageSize(page.getPageSize());
+        setPageCount(page.getTotalPage());
+    }
 
-	public void setSuccess(boolean success) {
-		this.success = success;
-	}
+    
+    public Integer getPageCount()
+    {
+        return pageCount;
+    }
 
-	public String getMessage() {
-		return message;
-	}
+    public void setPageCount(Integer pageCount)
+    {
+        this.pageCount = pageCount;
+    }
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    public Object getUserData()
+    {
+        return userData;
+    }
 
-	public Object getData() {
-		return data;
-	}
+    public void setUserData(Object userData)
+    {
+        this.userData = userData;
+    }
 
-	public void setData(Object data) {
-		this.data = data;
-	}
+    public boolean isSuccess()
+    {
+        return success;
+    }
 
-	public boolean isPage() {
-		return isPage;
-	}
+    public void setSuccess(boolean success)
+    {
+        this.success = success;
+    }
 
-	public void setPage(boolean isPage) {
-		this.isPage = isPage;
-	}
+    public String getMessage()
+    {
+        return message;
+    }
 
-	public Integer getPageIndex() {
-		return pageIndex;
-	}
+    public void setMessage(String message)
+    {
+        this.message = message;
+    }
 
-	public void setPageIndex(Integer pageIndex) {
-		this.pageIndex = pageIndex;
-	}
+    public Object getData()
+    {
+        return data;
+    }
 
-	public Integer getPageSize() {
-		return pageSize;
-	}
+    public void setData(Object data)
+    {
+        this.data = data;
+    }
 
-	public void setPageSize(Integer pageSize) {
-		this.pageSize = pageSize;
-	}
+    public boolean isPage()
+    {
+        return isPage;
+    }
 
-	public Integer getCount() {
-		return count;
-	}
+    public void setPage(boolean isPage)
+    {
+        this.isPage = isPage;
+    }
 
-	public void setCount(Integer count) {
-		this.count = count;
-	}
+    public Integer getPageIndex()
+    {
+        return pageIndex;
+    }
 
-	@Override
-	public String toString() {
-		return "ResponseMessage [success=" + success + ", message=" + message + ", data=" + data + ", isPage=" + isPage
-				+ ", pageIndex=" + pageIndex + ", pageSize=" + pageSize + ", count=" + count + ", userData=" + userData
-				+ "]";
-	}
+    public void setPageIndex(Integer pageIndex)
+    {
+        this.pageIndex = pageIndex;
+    }
+
+    public Integer getPageSize()
+    {
+        return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize)
+    {
+        this.pageSize = pageSize;
+    }
+
+    public Integer getCount()
+    {
+        return count;
+    }
+
+    public void setCount(Integer count)
+    {
+        this.count = count;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "ResponseMessage [success="
+               + success
+               + ", message="
+               + message
+               + ", data="
+               + data
+               + ", isPage="
+               + isPage
+               + ", pageIndex="
+               + pageIndex
+               + ", pageSize="
+               + pageSize
+               + ", pageCount="
+               + pageCount
+               + ", count="
+               + count
+               + ", userData="
+               + userData
+               + "]";
+    }
 
 }

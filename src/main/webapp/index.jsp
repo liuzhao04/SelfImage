@@ -83,7 +83,7 @@ img {
 	border: 3px solid #eeeeff;
 }
 
-#showImage {
+.showImage {
 	float: right;
 	width: 470px;
 	height: 300px;
@@ -110,6 +110,9 @@ img {
 
 a:hover {
 	cursor: pointer;
+}
+td a{
+	margin-right:4px;
 }
 
 #showImageNames {
@@ -239,7 +242,7 @@ a:hover {
 <body>
 	<h1>酷比乐·匹克切</h1>
 	<div class="ui-widget">
-		<p>致力于为全人类提供图片存储服务，但目前先实现为自己服务的小目标！大家好,我是酷比乐，我为我的匹克切代言！</p>
+		<p>致力于为全人类提供图片存储服务，但目前先实现为自己服务的小目标！大家好,我是酷比乐，我为匹克切代言！</p>
 	</div>
 	<div id="tabs">
 		<ul>
@@ -247,7 +250,7 @@ a:hover {
 			<li><a href="#tabs-2">我的匹克切</a></li>
 		</ul>
 		<div id="tabs-1">
-			<img id="showImage" alt="无图片" title="请选择需要展示的图片"
+			<img id="showImage" class="showImage" alt="无图片" title="请选择需要展示的图片"
 				src="${imagePath}/default_img_02.png">
 			<!-- <fieldset> -->
 			<div class="fieldset">
@@ -274,13 +277,14 @@ a:hover {
 				<input type="file" id="imageOpen" name="files" accept="image/*"
 					multiple='multiple' " style="display: none;" />
 			</form>
-			<span id="remoteUrlSpan"></span>
 		</div>
 		<div id="tabs-2">
+			<img id="showImageQuery" class="showImage" alt="无图片" title="请选择需要展示的图片"
+				src="${imagePath}/default_img_02.png">
 			<table id="queryGrid"></table>
 			<div id="queryGridPager"></div>
 		</div>
-
 	</div>
+	<span id="remoteUrlSpan"></span>
 </body>
 </html>

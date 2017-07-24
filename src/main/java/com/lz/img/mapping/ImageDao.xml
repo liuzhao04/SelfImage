@@ -18,7 +18,7 @@
     	values(#{batchId},#{name},#{saveName},#{fileSize},#{uploadSize},#{error},#{remoteUrl})
 	</insert>
 	
-	<select id="select" resultMap="imageMap">
+	<select id="selectByPage" resultMap="imageMap">
 		select * from IMG_IMAGE_INFORMATION WHERE 1 = 1
 		<if test="imageId != null">
 			and imageId = #{imageId}

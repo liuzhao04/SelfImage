@@ -61,11 +61,17 @@
     <bean id="pageInterceptor" class="com.lz.common.page.PageInterceptor"></bean>
     
     <!-- 配置拦截器 -->
-    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+
+<!--     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"> -->
+    <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
         <property name="interceptors">
             <list>
                 <ref bean="pageInterceptor" />
             </list>
         </property>
     </bean>
+    <!-- <bean class="org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator" /> --> 
+<!-- <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
+<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/> -->
+
 </beans>
