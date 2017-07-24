@@ -1,5 +1,7 @@
 package com.lz.img.dao;
 
+import java.util.List;
+
 import com.lz.img.pojo.ImageInfor;
 
 /**
@@ -16,4 +18,10 @@ public interface IImageDao
      * @param infor
      */
     public void insert(ImageInfor infor);
+
+    /**
+     * 查询图片记录
+     * @param imageInfor
+     */
+	public List<ImageInfor> select(ImageInfor imageInfor);
 }

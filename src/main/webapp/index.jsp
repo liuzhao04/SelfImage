@@ -6,6 +6,7 @@
 <head>
 <jsp:include page="/main/common.jsp" flush="true"></jsp:include>
 <script src="${scriptPath}/page_upload.js" type="text/javascript"></script>
+<script src="${scriptPath}/page_query.js" type="text/javascript"></script>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>酷比乐图片服务</title>
@@ -132,6 +133,11 @@ a:hover {
 
     function uploadImages()
     {
+    	var val = $("#showImageNames").val();
+    	if( val == '') {
+    		SPopupBox.alert("请选择图片文件！");
+    		return;
+    	}
         var formData = new FormData($("#uploadImagesForm")[0]);
         $.ajax(
         {
@@ -162,7 +168,6 @@ a:hover {
 
     function getStatus(batchId)
     {
-        debugger
        	var postData = new Object();
        	postData.batchId = batchId;
         $.ajax(
@@ -264,7 +269,6 @@ a:hover {
 				</thead>
 				<tbody></tbody>
 			</table>
-			<div id="uploadGridPager"></div>
 			<form id="uploadImagesForm" method="post"
 				enctype="multipart/form-data">
 				<input type="file" id="imageOpen" name="files" accept="image/*"
@@ -273,7 +277,8 @@ a:hover {
 			<span id="remoteUrlSpan"></span>
 		</div>
 		<div id="tabs-2">
-			<h2>图片查询</h2>
+			<table id="queryGrid"></table>
+			<div id="queryGridPager"></div>
 		</div>
 
 	</div>

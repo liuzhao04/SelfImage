@@ -1,125 +1,121 @@
 package com.lz.img.pojo;
 
+import java.util.Date;
+
 /**
  * 文件上传信息
  *
  * @author Administrator
  * @version 1.0, 2017年7月23日
  */
-public class ImageInfor
-{
-    private Long imageId;
+public class ImageInfor extends RequestBase {
+	private static final long serialVersionUID = 2524308929369629730L;
 
-    private String name;
+	private Long imageId;
 
-    private String saveName;
+	private String name;
 
-    private Long fileSize;
+	private String saveName;
 
-    private String error; // 上传是否出错
+	private Long fileSize;
 
-    private Long uploadSize;
-    
-    private String remoteUrl;
-    
-    private String batchId; // 上传批次
-    
-    public String getBatchId()
-    {
-        return batchId;
-    }
+	private String error; // 上传是否出错
 
-    public void setBatchId(String batchId)
-    {
-        this.batchId = batchId;
-    }
+	private Long uploadSize;
 
-    public String getRemoteUrl()
-    {
-        return remoteUrl;
-    }
+	private String remoteUrl;
 
-    public void setRemoteUrl(String remoteUrl)
-    {
-        this.remoteUrl = remoteUrl;
-    }
+	private String batchId; // 上传批次
 
-    public String getError()
-    {
-        return error;
-    }
+	private Date createTime;
+	
+	private String createTimeStr;
+	
+	public Date getCreateTime() {
+		return createTime;
+	}
 
-    public void setError(String error)
-    {
-        this.error = error;
-    }
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 
-    public Long getImageId()
-    {
-        return imageId;
-    }
+	public String getCreateTimeStr() {
+		return createTimeStr;
+	}
 
-    public void setImageId(Long imageId)
-    {
-        this.imageId = imageId;
-    }
+	public void setCreateTimeStr(String createTimeStr) {
+		this.createTimeStr = createTimeStr;
+	}
 
-    public String getName()
-    {
-        return name;
-    }
+	public String getBatchId() {
+		return batchId;
+	}
 
-    public void setName(String name)
-    {
-        this.name = name;
-    }
+	public void setBatchId(String batchId) {
+		this.batchId = batchId;
+	}
 
-    public String getSaveName()
-    {
-        return saveName;
-    }
+	public String getRemoteUrl() {
+		return remoteUrl;
+	}
 
-    public void setSaveName(String saveName)
-    {
-        this.saveName = saveName;
-    }
+	public void setRemoteUrl(String remoteUrl) {
+		this.remoteUrl = remoteUrl;
+	}
 
-    public Long getFileSize()
-    {
-        return fileSize;
-    }
+	public String getError() {
+		return error;
+	}
 
-    public void setFileSize(Long fileSize)
-    {
-        this.fileSize = fileSize;
-    }
+	public void setError(String error) {
+		this.error = error;
+	}
 
-    public Long getUploadSize()
-    {
-        return uploadSize;
-    }
+	public Long getImageId() {
+		return imageId;
+	}
 
-    public void setUploadSize(Long uploadSize)
-    {
-        this.uploadSize = uploadSize;
-    }
+	public void setImageId(Long imageId) {
+		this.imageId = imageId;
+	}
 
-    @Override
-    public String toString()
-    {
-        return "ImageInfor [imageId="
-               + imageId
-               + ", name="
-               + name
-               + ", saveName="
-               + saveName
-               + ", fileSize="
-               + fileSize
-               + ", error="
-               + error
-               + ", uploadSize="
-               + uploadSize
-               + "]";
-    }
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSaveName() {
+		return saveName;
+	}
+
+	public void setSaveName(String saveName) {
+		this.saveName = saveName;
+	}
+
+	public Long getFileSize() {
+		return fileSize;
+	}
+
+	public void setFileSize(Long fileSize) {
+		this.fileSize = fileSize;
+	}
+
+	public Long getUploadSize() {
+		return uploadSize;
+	}
+
+	public void setUploadSize(Long uploadSize) {
+		this.uploadSize = uploadSize;
+	}
+
+	@Override
+	public String toString() {
+		return "ImageInfor [imageId=" + imageId + ", name=" + name + ", saveName=" + saveName + ", fileSize=" + fileSize
+				+ ", error=" + error + ", uploadSize=" + uploadSize + ", remoteUrl=" + remoteUrl + ", batchId="
+				+ batchId + ", createTime=" + createTime +","+super.toString()+ "]";
+	}
 
 }

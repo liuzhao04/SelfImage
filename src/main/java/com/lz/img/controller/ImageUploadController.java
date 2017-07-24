@@ -1,6 +1,7 @@
 package com.lz.img.controller;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.lz.common.message.ResponseMessage;
+import com.lz.common.page.Page;
 import com.lz.common.upload.InputStreamSaveThread;
 import com.lz.common.utils.BackGroupCache;
 import com.lz.common.utils.Md5Utils;
@@ -29,9 +32,12 @@ import com.lz.img.utils.PropertiesUtils;
 
 @Controller
 @RequestMapping("/image")
-public class ImageUploadController
+@Scope("session")
+public class ImageUploadController implements Serializable
 {
-    private static final Logger logger = LoggerFactory.getLogger(ImageUploadController.class);
+	private static final long serialVersionUID = 4374001474262575313L;
+
+	private static final Logger logger = LoggerFactory.getLogger(ImageUploadController.class);
 
     @Resource
     private IImageService imageService = null;
@@ -45,6 +51,7 @@ public class ImageUploadController
                                             HttpServletRequest request,
                                             HttpServletResponse response)
     {
+    	System.out.println("Submit Thread Id:"+Thread.currentThread().getId()+" "+this);
         ResponseMessage msg = new ResponseMessage();
         msg.setSuccess(true);
         msg.setCount(files.size());
@@ -99,6 +106,7 @@ public class ImageUploadController
     @SuppressWarnings("unchecked")
     public synchronized ResponseMessage submitProcess(@RequestParam( "batchId")String batchId)
     {
+    	System.out.println("Process Thread Id:"+Thread.currentThread().getId()+" "+this);
         ResponseMessage msg = new ResponseMessage();
         msg.setSuccess(true);
         List<InputStreamSaveThread> ths = (List<InputStreamSaveThread>)BackGroupCache.get(batchId+"image_upload_thread_list");
@@ -147,5 +155,24 @@ public class ImageUploadController
             }
         }
         return msg;
+    }
+    
+    @RequestMapping("/initTable.do")
+    @ResponseBody
+    public  ResponseMessage initTable(ImageInfor imageInfor,Page page) {
+    	/*root : 'data',
+		page : 'pageIndex',
+		total : 'pageSize',
+		records : 'count',
+		repeatitems : false,
+		userdata : 'userData'*/
+			
+    	System.out.println(imageInfor);
+    	System.out.println(page);
+    	Page rs = imageService.list(imageInfor);
+    	ResponseMessage msg = new ResponseMessage(rs);
+    	msg.setData(rs.getData());
+    	System.out.println(msg);
+		return msg;
     }
 }
