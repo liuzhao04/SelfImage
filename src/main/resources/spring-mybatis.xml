@@ -40,12 +40,15 @@
 		<property name="dataSource" ref="dataSource" />
 		<!-- 自动扫描mapping.xml文件 -->
 		<property name="mapperLocations" value="classpath:com/lz/img/mapping/*.xml"></property>
+		<property name="typeAliasesPackage" value="com.lz.img.pojo" />
+		<property name="configLocation" value="classpath:mybatis-config.xml" />
 	</bean>
 
 	<!-- DAO接口所在包名，Spring会自动查找其下的类 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="com.lz.img.dao" />
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+		<property name="processPropertyPlaceHolders" value="true" />
 	</bean>
 
 	<!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
@@ -54,4 +57,15 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
+	<!-- 分页拦截器 -->
+    <bean id="pageInterceptor" class="com.lz.common.page.PageInterceptor"></bean>
+    
+    <!-- 配置拦截器 -->
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+        <property name="interceptors">
+            <list>
+                <ref bean="pageInterceptor" />
+            </list>
+        </property>
+    </bean>
 </beans>

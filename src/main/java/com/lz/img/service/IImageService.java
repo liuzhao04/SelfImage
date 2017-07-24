@@ -1,5 +1,6 @@
 package com.lz.img.service;
 
+import com.lz.common.page.Page;
 import com.lz.img.pojo.ImageInfor;
 
 /**
@@ -16,4 +17,11 @@ public interface IImageService
      * @param imageInfor
      */
     public void insert(ImageInfor imageInfor);
+
+    /**
+     * 分页查询
+     * @param imageInfor
+     * @return
+     */
+	public Page list(ImageInfor imageInfor);
 }

@@ -27,7 +27,6 @@ function init(data) {
 }
 
 function process(data) {
-    var i = 0;
     $.each(selectFileDatas,function(i,row){
         var tmp = undefined;
         $.each(data,function(j,row_){
@@ -36,12 +35,12 @@ function process(data) {
             }
         });
         if(tmp) {
+        	selectFileDatas[i].uploadSize = tmp.uploadSize;
             var percent = GetPercent(tmp.uploadSize, tmp.fileSize);
             var txt = percent + "% " + Math.round(tmp.uploadSize / 1024)+"k/"+Math.round(tmp.fileSize / 1024)+"k";
             changeProcess(i, percent, txt);
             return;
         }
-        i++;
     });
 }
 
@@ -65,8 +64,13 @@ function refreshTable()
 function changeImage(i) {
     var data = getRowData(i);
     if(data && data.remoteUrl) {
-        $("#showImage").attr('src',data.remoteUrl); 
-        $("#showImage").attr('title',data.name); 
+    	if(data.uploadSize ==  data.fileSize) {
+    		$("#showImage").attr('src',data.remoteUrl); 
+    		$("#showImage").attr('title',data.name); 
+    	}else{
+    		SPopupBox.alert("图片上传完成后才能预览!");
+    	}
+    	
     }
 }
 
@@ -93,7 +97,7 @@ function copyLink(i) {
     }
     document.execCommand("Copy");
     window.getSelection().removeAllRanges();
-    SPopupBox.alert("已复制到粘贴板");
+    SPopupBox.alert("链接已复制到粘贴板");
 }
 
 function select(element) {

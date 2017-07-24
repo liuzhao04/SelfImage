@@ -8,12 +8,35 @@
 		<result column="name" property="name" jdbcType="VARCHAR" />
 		<result column="fileSize" property="fileSize" jdbcType="BIGINT" />
 		<result column="uploadSize" property="uploadSize" jdbcType="BIGINT" />
-		<result column="error" property="uploadSize" jdbcType="VARCHAR" />
-		<result column="remoteUrl" property="uploadSize" jdbcType="VARCHAR" />
+		<result column="error" property="error" jdbcType="VARCHAR" />
+		<result column="remoteUrl" property="remoteUrl" jdbcType="VARCHAR" />
+		<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
 	</resultMap>
 
 	<insert id="insert" useGeneratedKeys="true" keyProperty="imageId">
     	insert into IMG_IMAGE_INFORMATION(batchId,name,saveName,fileSize,uploadSize,error,remoteUrl) 
-    	values(#{batchId},#{name},#{saveName},#{fileSize},#{uploadSize},#{error},#{remoteUrl});
+    	values(#{batchId},#{name},#{saveName},#{fileSize},#{uploadSize},#{error},#{remoteUrl})
 	</insert>
+	
+	<select id="select" resultMap="imageMap">
+		select * from IMG_IMAGE_INFORMATION WHERE 1 = 1
+		<if test="imageId != null">
+			and imageId = #{imageId}
+		</if>
+		<if test="batchId != null">
+			and batchId = #{batchId}
+		</if>
+		<if test="name != null and name != ''">
+			and name contact('%',#{name},contact('%'))
+		</if>
+		<if test="createTime != null">
+			and createTime = #{createTime}
+		</if>
+		<if test="sortName != null and sortName != '' and sortOrder != null and sortOrder != ''">
+		 	order by ${sortName} ${sortOrder}
+		 </if>
+		<if test="sortName == null or sortName == '' or sortOrder == null or sortOrder == ''">
+		 	order by createTime desc
+		 </if>
+	</select>
 </mapper>  

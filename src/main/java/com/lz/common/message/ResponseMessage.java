@@ -1,115 +1,114 @@
 package com.lz.common.message;
 
+import java.io.Serializable;
+
+import com.lz.common.page.Page;
+
 /**
  * 后台数据返回格式
  *
  * @author Administrator
  * @version 1.0, 2017年7月23日
  */
-public class ResponseMessage
-{
-    private boolean success;
+public class ResponseMessage implements Serializable{ 
+	private static final long serialVersionUID = -2867571757278640401L;
 
-    private String message;
+	private boolean success;
 
-    private Object data;
+	private String message;
 
-    private boolean isPage;
+	private Object data;
 
-    private Integer pageIndex;
+	private boolean isPage;
 
-    private Integer pageSize;
+	private Integer pageIndex;
 
-    private Integer count;
+	private Integer pageSize;
 
-    public boolean isSuccess()
-    {
-        return success;
-    }
+	private Integer count;
 
-    public void setSuccess(boolean success)
-    {
-        this.success = success;
-    }
+	private Object userData;
+	
+	public ResponseMessage() {
+		setSuccess(true);
+	}
+	
+	public ResponseMessage(Page page) {
+		setSuccess(true);
+		setCount(page.getTotalCount());
+    	setPageIndex(page.getPageNo());
+    	setData(page.getPageSize());
+	}
 
-    public String getMessage()
-    {
-        return message;
-    }
+	public Object getUserData() {
+		return userData;
+	}
 
-    public void setMessage(String message)
-    {
-        this.message = message;
-    }
+	public void setUserData(Object userData) {
+		this.userData = userData;
+	}
 
-    public Object getData()
-    {
-        return data;
-    }
+	public boolean isSuccess() {
+		return success;
+	}
 
-    public void setData(Object data)
-    {
-        this.data = data;
-    }
+	public void setSuccess(boolean success) {
+		this.success = success;
+	}
 
-    public boolean isPage()
-    {
-        return isPage;
-    }
+	public String getMessage() {
+		return message;
+	}
 
-    public void setPage(boolean isPage)
-    {
-        this.isPage = isPage;
-    }
+	public void setMessage(String message) {
+		this.message = message;
+	}
 
-    public Integer getPageIndex()
-    {
-        return pageIndex;
-    }
+	public Object getData() {
+		return data;
+	}
 
-    public void setPageIndex(Integer pageIndex)
-    {
-        this.pageIndex = pageIndex;
-    }
+	public void setData(Object data) {
+		this.data = data;
+	}
 
-    public Integer getPageSize()
-    {
-        return pageSize;
-    }
+	public boolean isPage() {
+		return isPage;
+	}
 
-    public void setPageSize(Integer pageSize)
-    {
-        this.pageSize = pageSize;
-    }
+	public void setPage(boolean isPage) {
+		this.isPage = isPage;
+	}
 
-    public Integer getCount()
-    {
-        return count;
-    }
+	public Integer getPageIndex() {
+		return pageIndex;
+	}
 
-    public void setCount(Integer count)
-    {
-        this.count = count;
-    }
+	public void setPageIndex(Integer pageIndex) {
+		this.pageIndex = pageIndex;
+	}
 
-    @Override
-    public String toString()
-    {
-        return "ResponseMessage [success="
-               + success
-               + ", message="
-               + message
-               + ", data="
-               + data
-               + ", isPage="
-               + isPage
-               + ", pageIndex="
-               + pageIndex
-               + ", pageSize="
-               + pageSize
-               + ", count="
-               + count
-               + "]";
-    }
+	public Integer getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
+	}
+
+	public Integer getCount() {
+		return count;
+	}
+
+	public void setCount(Integer count) {
+		this.count = count;
+	}
+
+	@Override
+	public String toString() {
+		return "ResponseMessage [success=" + success + ", message=" + message + ", data=" + data + ", isPage=" + isPage
+				+ ", pageIndex=" + pageIndex + ", pageSize=" + pageSize + ", count=" + count + ", userData=" + userData
+				+ "]";
+	}
 
 }
