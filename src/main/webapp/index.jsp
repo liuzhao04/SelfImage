@@ -177,6 +177,9 @@ a:hover {
                 {
                     process(rs.data);
                     window.clearInterval(timer);
+                	if(rs.error) {
+                		SPopupBox.alert("服务器异常："+rs.error);
+                	}
                 }
                 else
                 {
@@ -188,11 +191,6 @@ a:hover {
                 SPopupBox.alert("上传中出现异常：" + e);
             }
         });
-    }
-    
-    function showRealPath(value)
-    {
-        alert(value);
     }
 
     function initWidow()

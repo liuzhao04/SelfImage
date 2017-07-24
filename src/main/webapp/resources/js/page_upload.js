@@ -93,7 +93,7 @@ function copyLink(i) {
     }
     document.execCommand("Copy");
     window.getSelection().removeAllRanges();
-    SPopupBox.alert("已复制到粘贴板");
+    SPopupBox.alert("链接已复制到粘贴板");
 }
 
 function select(element) {

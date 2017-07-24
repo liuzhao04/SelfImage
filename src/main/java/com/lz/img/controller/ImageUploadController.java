@@ -123,10 +123,17 @@ public class ImageUploadController
                 if (!th.isFinished())
                 {
                     uploadFinished = false;
-                }else {
+                } else {
                     if(!th.isHasSaveToDB()) {
-                        imageService.insert(infor);
-                        th.setHasSaveToDB(true);
+                    	try{
+                    		imageService.insert(infor);
+                    		th.setHasSaveToDB(true);
+                    	} catch(Exception e){
+                    		logger.error("数据写入失败",e);
+                    		th.setHasSaveToDB(false);
+                    		infor.setError(e.getMessage());
+                    		uploadFinished = true;
+                    	}
                     }
                 }
             }
