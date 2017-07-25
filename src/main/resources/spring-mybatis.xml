@@ -61,17 +61,17 @@
     <bean id="pageInterceptor" class="com.lz.common.page.PageInterceptor"></bean>
     
     <!-- 配置拦截器 -->
-
-<!--     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"> -->
-    <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
-        <property name="interceptors">
-            <list>
-                <ref bean="pageInterceptor" />
-            </list>
-        </property>
-    </bean>
-    <!-- <bean class="org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator" /> --> 
-<!-- <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
-<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/> -->
+    <mvc:interceptors>  
+	  <mvc:interceptor>    
+	        <!-- 匹配的是url路径， 如果不配置或/**,将拦截所有的Controller -->  
+	        <mvc:mapping path="/**" /> 
+	        <!-- 排除不需要拦截的目录 -->
+	        <mvc:exclude-mapping path="/login"/>
+	        <mvc:exclude-mapping path="/assets/**"/>
+	        <mvc:exclude-mapping path="/template/**"/>
+	        <bean class="com.lz.common.page.PageInterceptor"></bean>    
+	    </mvc:interceptor> 
+	    <!-- 当设置多个拦截器时，先按顺序调用preHandle方法，然后逆序调用每个拦截器的postHandle和afterCompletion方法 -->  
+	</mvc:interceptors>
 
 </beans>

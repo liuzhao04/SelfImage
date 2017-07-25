@@ -18,7 +18,7 @@ import com.lz.img.service.IImageService;
  * @version 1.0, 2017年7月23日
  */
 @Service("imageService")
-public class ImageServiceImpl implements IImageService {
+public class ImageServiceImpl implements IImageService{
 	@Autowired
 	private IImageDao dao;
 
@@ -38,6 +38,12 @@ public class ImageServiceImpl implements IImageService {
 		}
 		page.setData(rs);
 		return page;
+	}
+
+	@Override
+	public Boolean delImage(ImageInfor imageInfor) {
+		int count =  dao.delImage(imageInfor);;
+		return count > 0;
 	}
 
 }

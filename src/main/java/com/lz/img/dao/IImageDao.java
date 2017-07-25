@@ -24,4 +24,11 @@ public interface IImageDao
      * @param imageInfor
      */
 	public List<ImageInfor> selectByPage(ImageInfor imageInfor);
+
+	/**
+	 * 删除指定的图片
+	 * @param imageInfor
+	 * @return
+	 */
+	public int delImage(ImageInfor imageInfor);
 }

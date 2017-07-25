@@ -1,0 +1,28 @@
+.odd {
+	background:#fff;
+}
+
+.even {
+	background:#efeff6;
+}
+
+.ui-jqgrid .ui-jqgrid-htable {
+	table-layout: fixed;
+	margin: 0 auto;
+}
+
+.ui-jqgrid .ui-jqgrid-htable th {
+	color:#000; 
+	text-align:center; 
+	background-image:-moz-linear-gradient(top, #eeeeee, #dddddd); 
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #eeeeee), color-stop(1, #dddddd)); 
+	border-top:1px solid #ddd; 
+	border-right:1px solid #ddd; 
+	border-bottom:1px solid #ddd; 
+	box-shadow:0 -1px 3px #ddd; 
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee', endColorstr='#dddddd', GradientType='0'); 
+	line-height:30px; 
+	font-weight:bold;
+}
+
+.ui-jqgrid .ui-jqgrid-htable th div {overflow: hidden; position:relative; height:30px;line-height:30px;}

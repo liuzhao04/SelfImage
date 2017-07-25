@@ -38,6 +38,7 @@
 <script src="${scriptPath}/common/simple-popup-box.js" type="text/javascript"></script>
 <script src="${scriptPath}/common/simple-popup-box.js" type="text/javascript"></script>
 <script src="${scriptPath}/common/jquery-ui-lz-table.js" type="text/javascript"></script>
+<script src="${scriptPath}/common/common.js" type="text/javascript"></script>
 <script>
 var JS_CTX = '${ctx}';
 //获取当前网址，如： http://localhost:8080/Tmall/index.jsp 
@@ -69,3 +70,4 @@ var JS_HOST=curWwwPath.substring(0,pos);
 <%-- <link rel="stylesheet" type="text/css" href="${cssPath}/jqgrid/jquery-ui-1.8.16.custom.css" /> --%>
 <link rel="stylesheet" type="text/css" href="${cssPath}/jquery-ui/jquery-ui.min.css" />
 <link rel="stylesheet" type="text/css" href="${cssPath}/jquery-ui/jquery-ui-lz-table.css" />
+<link rel="stylesheet" type="text/css" href="${cssPath}/common.css" />

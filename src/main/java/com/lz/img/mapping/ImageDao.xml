@@ -39,4 +39,11 @@
 		 	order by createTime desc
 		 </if>
 	</select>
+	
+	<delete id="delImage">
+		delete from IMG_IMAGE_INFORMATION where 1=0 
+		<if test="imageId != null">
+			or imageId = #{imageId}
+		</if>
+	</delete>
 </mapper>  

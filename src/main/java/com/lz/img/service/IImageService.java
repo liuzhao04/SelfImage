@@ -24,4 +24,11 @@ public interface IImageService
      * @return
      */
 	public Page list(ImageInfor imageInfor);
+
+	/**
+	 * 图片删除
+	 * @param imageInfor
+	 * @return
+	 */
+	public Boolean delImage(ImageInfor imageInfor);
 }
