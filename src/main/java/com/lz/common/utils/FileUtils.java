@@ -32,10 +32,27 @@ public class FileUtils
         {
             return false;
         }
-        
-        if(pFile.mkdirs()) {
+
+        if (pFile.mkdirs())
+        {
             return true;
         }
         return false;
+    }
+
+    /**
+     * 删除文件
+     *
+     * @param path
+     * @return
+     */
+    public static boolean deleteFile(String path)
+    {
+        File file = new File(path);
+        if (file.exists())
+        {
+            return file.delete();
+        }
+        return true;
     }
 }

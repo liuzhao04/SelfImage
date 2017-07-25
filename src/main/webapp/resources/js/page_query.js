@@ -131,6 +131,8 @@ function copyQueryLink(remoteUrl) {
     SPopupBox.alert("链接已复制到粘贴板");
 }
 
+var delPostData = new Object();
+
 /**
  * 
  * @param rowId
@@ -138,14 +140,12 @@ function copyQueryLink(remoteUrl) {
  */
 function delQueryLine(rowId) {
 	var row = $queryGrid.jqGrid('getRowData', rowId);
-	debugger
-	SPopupBox.confirm("确定删除图片："+row.name+"?",undefined,function(){
+	delPostData.imageId = row.imageId;
+	SPopupBox.confirm("确定删除图片："+row.imageId+" - "+row.name+"?",undefined,function(){
 		$.ajax({
             url : delImageUrl,
             type : "post",
-            data : {imageId:row.imageId},
-            processData : false,
-            contentType : false,
+            data : delPostData,
             dataType : "json",
             success : function(rs)
             {
@@ -155,7 +155,7 @@ function delQueryLine(rowId) {
                 }
                 else
                 {
-                    SPopupBox.alert("删除失败" + rs.message);
+                    SPopupBox.alert("删除失败:" + rs.message);
                 }
             },
             error : function(e)

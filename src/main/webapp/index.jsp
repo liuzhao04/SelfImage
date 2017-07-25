@@ -236,6 +236,11 @@ td a{
         });
         
         $("#remoteUrlSpan").css("opacity",0.0);
+        
+        // 页面切换时，重新加载数据
+        $("#queryImageMenu").on('click',function(){
+            reloadQueryGrid();
+        });
     }
 </script>
 </head>
@@ -247,7 +252,7 @@ td a{
 	<div id="tabs">
 		<ul>
 			<li><a href="#tabs-1">来吧匹克切</a></li>
-			<li><a href="#tabs-2">我的匹克切</a></li>
+			<li><a id="queryImageMenu" href="#tabs-2">我的匹克切</a></li>
 		</ul>
 		<div id="tabs-1">
 			<img id="showImage" class="showImage" alt="无图片" title="请选择需要展示的图片"
