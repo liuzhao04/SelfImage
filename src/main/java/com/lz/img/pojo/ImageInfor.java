@@ -28,9 +28,28 @@ public class ImageInfor extends RequestBase {
 	private String batchId; // 上传批次
 
 	private Date createTime;
-	
+
 	private String createTimeStr;
-	
+
+	private String timeStart; // 查询区间
+	private String timeEnd;
+
+	public String getTimeStart() {
+		return timeStart;
+	}
+
+	public void setTimeStart(String timeStart) {
+		this.timeStart = timeStart;
+	}
+
+	public String getTimeEnd() {
+		return timeEnd;
+	}
+
+	public void setTimeEnd(String timeEnd) {
+		this.timeEnd = timeEnd;
+	}
+
 	public Date getCreateTime() {
 		return createTime;
 	}
@@ -115,7 +134,8 @@ public class ImageInfor extends RequestBase {
 	public String toString() {
 		return "ImageInfor [imageId=" + imageId + ", name=" + name + ", saveName=" + saveName + ", fileSize=" + fileSize
 				+ ", error=" + error + ", uploadSize=" + uploadSize + ", remoteUrl=" + remoteUrl + ", batchId="
-				+ batchId + ", createTime=" + createTime +","+super.toString()+ "]";
+				+ batchId + ", createTime=" + createTime + ", createTimeStr=" + createTimeStr + ", timeStart="
+				+ timeStart + ", timeEnd=" + timeEnd + "]";
 	}
 
 }

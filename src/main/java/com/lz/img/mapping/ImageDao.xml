@@ -27,10 +27,17 @@
 			and batchId = #{batchId}
 		</if>
 		<if test="name != null and name != ''">
-			and name contact('%',#{name},contact('%'))
+			<!-- and name contact('%',#{name},contact('%')) oracle-->
+			and name like contact('%',#{name},'%')
 		</if>
 		<if test="createTime != null">
 			and createTime = #{createTime}
+		</if>
+		<if test="timeStart != null">
+			and createTime &gt;= str_to_date(#{timeStart},'YYYY-MM-DD HH24:mi')
+		</if>
+		<if test="timeEnd != null">
+			and createTime &lt;= str_to_date(#{timeStart},'YYYY-MM-DD HH24:mi')
 		</if>
 		<if test="sortName != null and sortName != '' and sortOrder != null and sortOrder != ''">
 		 	order by ${sortName} ${sortOrder}

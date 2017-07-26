@@ -30,11 +30,6 @@
 	height: 700px;
 }
 
-body {
-	font-family: "Trebuchet MS", sans-serif;
-	margin: 50px;
-}
-
 .headers {
 	margin-top: 2em;
 }
@@ -286,6 +281,14 @@ td a{
 		<div id="tabs-2">
 			<img id="showImageQuery" class="showImage" alt="无图片" title="请选择需要展示的图片"
 				src="${imagePath}/default_img_02.png">
+			<div id="searchArea" class="searchArea">
+				<form id="searchFrom">
+					<label>起始时间:</label><input id="datepickerStart" name="timeStart" type="text" width="40">
+					<label>结束时间:</label><input id="datepickerEnd" name="timeEnd" type="text" width="40">
+					<label>图片名称:</label><input name="name" type="text" width="40">
+					<span class="button" id="button-search-images">查询</span>
+				</form>
+			</div>
 			<table id="queryGrid"></table>
 			<div id="queryGridPager"></div>
 		</div>
