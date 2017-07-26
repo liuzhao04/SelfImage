@@ -136,9 +136,10 @@ function initQueryTable($table) {
 					return true;
 				},
 				onPaging : function(pgButton) {
-					var curPage = $table.getGridParam('page'), totalPage = $table
-							.getGridParam('lastpage'), pageParam = curPage > totalPage ? totalPage
-							: curPage;
+				    debugger
+					var curPage = $table.getGridParam('page');
+				    var totalPage = $table.getGridParam('lastpage');
+				    var pageParam = curPage > totalPage ? totalPage : curPage;
 					$table.setGridParam({
 						page : pageParam
 					});
@@ -269,7 +270,6 @@ function batchDelQueryLine() {
  * @returns
  */
 function queryImages() {
-	debugger
 	var formJson = $("#searchFrom").serializeObject();
 	$queryGrid.clearGridData();
 	$queryGrid.jqGrid('setGridParam', {
@@ -283,7 +283,8 @@ function queryImages() {
  */
 function reloadQueryGrid() {
 	$queryGrid.clearGridData();
+	$("#searchFrom")[0].reset();
 	$queryGrid.jqGrid("setGridParam", {
-		postData : null
+		postData : {}
 	}).trigger("reloadGrid");
 }
