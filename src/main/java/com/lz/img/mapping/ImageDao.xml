@@ -36,7 +36,7 @@
 		<if test="timeStart != null and timeStart !=''">
 			and createTime &gt;= str_to_date(#{timeStart},'%Y-%m-%d %H:%i')
 		</if>
-		<if test="timeEnd != null and timeStart !=''">
+		<if test="timeEnd != null and timeEnd !=''">
 			and createTime &lt;= str_to_date(#{timeEnd},'%Y-%m-%d %H:%i')
 		</if>
 		<if test="sortName != null and sortName != '' and sortOrder != null and sortOrder != ''">

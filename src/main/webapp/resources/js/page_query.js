@@ -285,6 +285,10 @@ function reloadQueryGrid() {
 	$queryGrid.clearGridData();
 	$("#searchFrom")[0].reset();
 	$queryGrid.jqGrid("setGridParam", {
-		postData : {}
+		postData : {
+		    timeStart:null,
+		    timeEnd:null,
+		    name:null
+		}
 	}).trigger("reloadGrid");
 }

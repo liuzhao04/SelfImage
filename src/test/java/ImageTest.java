@@ -9,8 +9,8 @@ import com.lz.img.pojo.ImageInfor;
 import com.lz.img.service.IImageService;
 import static org.junit.Assert.assertTrue;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:spring-*.xml" })
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration(locations = { "classpath:spring-*.xml" })
 public class ImageTest {
 	@Autowired
 	private IImageService imageService;
