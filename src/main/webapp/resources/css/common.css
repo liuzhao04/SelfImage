@@ -53,5 +53,55 @@ body {
 	height: 24px;
 }
 
+.img-ui-panel{
+	display: block;
+	width:100%;
+}
+.img-ui-panel-item{
+	margin: 0px;
+	display: inline-block;
+}
+.img-ui-panel-item .full{
+	width:100%;
+}
+.img-ui-panel-item .line-item{
+	margin-bottom: 10px;
+}
+.panel-west{
+	width:60%;
+}
+.panel-east{
+	width:40%;
+	float: right;
+}
+.panel-east .line-item{
+	width:94%;
+	margin-left: 5%;
+}
+.panel-bottom{
+	width:100%;
+	float: right;
+}
 
-
+img {
+	border: 3px solid #eeeeff;
+}
+.img-ui-process{
+	width: 100%;
+	margin-bottom: 5px;
+}
+.img-ui-process *{
+	display: inline-block;
+}
+.img-ui-process .process-bar{
+	width:60%;
+	height:12px;
+	margin-left: 0px;
+	
+}
+.img-ui-process .process-percent{
+	width:60px;
+}
+.img-ui-process .process-describe{
+	width:30%;
+}

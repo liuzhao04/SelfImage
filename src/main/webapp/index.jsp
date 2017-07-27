@@ -12,75 +12,8 @@
 <title>酷比乐图片服务</title>
 
 <style type="text/css">
-#wrapper {
-	margin: 4px 10px 4px 10px;
-}
-
-#wrapper div {
-	vertical-align: middle;
-}
-
-#naviDiv {
-	display: inline-block;
-	height: 700px;
-}
-
-#bodyDiv {
-	display: inline-block;
-	height: 700px;
-}
-
-.headers {
-	margin-top: 2em;
-}
-
-.ui-tabs-vertical {
-	width: 110em;
-}
-
-.ui-tabs-vertical .ui-tabs-nav {
-	padding: .2em .1em .2em .2em;
-	float: left;
-	width: 12em;
-}
-
-.ui-tabs-vertical .ui-tabs-nav li {
-	clear: left;
-	width: 100%;
-	border-bottom-width: 1px !important;
-	border-right-width: 0 !important;
-	margin: 0 -1px .2em 0;
-}
-
-.ui-tabs-vertical .ui-tabs-nav li a {
-	display: block;
-	cursor: pointer;
-}
-
-.ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active {
-	padding-bottom: 0;
-	padding-right: .1em;
-	border-right-width: 1px;
-	border-right-width: 1px;
-}
-
-.ui-tabs-vertical .ui-tabs-panel {
-	padding: 1em;
-	float: right;
-	width: 95em;
-}
-
-.fieldset {
-	margin-bottom: 10px;
-}
-
-img {
-	border: 3px solid #eeeeff;
-}
 
 .showImage {
-	float: right;
-	width: 470px;
 	height: 300px;
 }
 
@@ -114,16 +47,21 @@ td a{
 	width: 300px;
 	height: 24px;
 }
-#parent{width:550px; height:10px; border:2px solid #09F;} 
-#son{width:0; height:100%; background-color:#09F; text-align:center; line-height:10px; font-size:20px; font-weight:bold;} 
+
+#parent{width:550px; height:10px; border:2px solid #09F;}
+#son{width:0; height:100%; background-color:#09F; text-align:center; line-height:10px; font-size:20px; font-weight:bold;}
+
 </style>
 
 <script type="text/javascript">
-    var timer;
+    var $process;
+    
     $(document).ready(function()
     {
         var $uploadGrid = $("#uploadGrid");
         initWidow();
+        $process = new ImgUiProcess("img-upload-process");
+        $process.init();
     });
 
     function openImages()
@@ -151,8 +89,7 @@ td a{
             {
                 if (rs.success)
                 {
-                    init(rs.data);
-                    timer = setInterval('getStatus("'+rs.data[0].batchId+'")', 200); // 启动进度监控
+                	SPopupBox.alert_callback("成功上传：" + rs.data.length+"张图片",undefined,clearFileInput);
                 }
                 else
                 {
@@ -161,7 +98,7 @@ td a{
             },
             error : function(e)
             {
-                SPopupBox.alert("上传失败：" + e);
+                SPopupBox.alert("服务器异常");
             },
             xhr : function() {
             	var xhr = $.ajaxSettings.xhr();
@@ -173,54 +110,22 @@ td a{
         });
     }
     
-   
+    function clearFileInput() {
+    	$("#uploadImagesForm")[0].reset();
+    	$("#showImageNames").val("");
+    	$process.init();
+    }
+    
    	// 上传进度处理
     function onprogress(evt) {
-   		debugger
-    	var loaded = evt.loaded;     //已经上传大小情况 
-    	var tot = evt.total;      	 //附件总大小 
-    	var per = Math.floor( 100 * loaded / tot);  
-    	$("#son").html( per +"%" );
-    	$("#son").css("width" , per +"%");
+    	$process.init();
+    	$process.updateProcess(evt.loaded,evt.total);
     }
 
-    function getStatus(batchId)
-    {
-       	var postData = new Object();
-       	postData.batchId = batchId;
-        $.ajax(
-        {
-            url : "image/process.do",
-            type : "post",
-            dataType : "json",
-            data : postData ,
-            success : function(rs)
-            {
-                if (rs.success)
-                {
-                    process(rs.data);
-                    window.clearInterval(timer);
-                	if(rs.error) {
-                		SPopupBox.alert("服务器异常："+rs.error);
-                	}
-                }
-                else
-                {
-                    process(rs.data); // 更新进度
-                }
-            },
-            error : function(e)
-            {
-                SPopupBox.alert("上传中出现异常：" + e);
-            }
-        });
-    }
-
+    
     function initWidow()
     {
-        $("#tabs").tabs().addClass("ui-tabs-vertical ui-helper-clearfix");
-        $("#tabs li").removeClass("ui-corner-top").addClass("ui-corner-left");
-        $("#tabs ul li a").width($("#tabs ul li").width() - 35);
+    	$( "#accordion" ).accordion();
         $("#button-open-images").button(
         {
             icon : "ui-icon-folder-open",
@@ -256,8 +161,6 @@ td a{
         $("#queryImageMenu").on('click',function(){
             reloadQueryGrid();
         });
-        
-        initUploadForm();
     }
 </script>
 </head>
@@ -266,53 +169,48 @@ td a{
 	<div class="ui-widget">
 		<p>致力于为全人类提供图片存储服务，但目前先实现为自己服务的小目标！大家好,我是酷比乐，我为匹克切代言！</p>
 	</div>
-	<div id="tabs">
-		<ul>
-			<li><a href="#tabs-1">来吧匹克切</a></li>
-			<li><a id="queryImageMenu" href="#tabs-2">我的匹克切</a></li>
-		</ul>
-		<div id="tabs-1">
-			<img id="showImage" class="showImage" alt="无图片" title="请选择需要展示的图片"
-				src="${imagePath}/default_img_02.png">
-			<!-- <fieldset> -->
-			<div class="fieldset">
-				<!-- <legend>图片上传</legend> -->
-				<button id="button-open-images">图片浏览</button>
-				<input type="text" id="showImageNames" readonly="true" />
-				<button id="button-upload-images">图片上传</button>
-				<!-- </fieldset> -->
+	<hr>
+	<div class="img-ui-panel">
+		<div class="img-ui-panel-item panel-west">
+			<div id="accordion" class="full line-item">
+				<h6>上传</h6>
+				<div>
+					<div class="searchArea">
+						<button id="button-open-images">图片浏览</button>
+						<input type="text" id="showImageNames" readonly="true" />
+						<button id="button-upload-images">图片上传</button>
+						<br>
+						<div id="img-upload-process" class="img-ui-process">
+							<span class="process-bar"></span>
+							<span class="process-percent"></span>
+							<span class="process-describe"></span>
+						</div>
+					</div>
+					<form id="uploadImagesForm"
+						enctype="multipart/form-data">
+						<input type="file" id="imageOpen" name="files" accept="image/*"  style="display: none;" multiple="multiple"/>
+					</form>
+				</div>
+				<h6>查询</h6>
+				<div>
+					<div id="searchArea" class="searchArea">
+						<form id="searchFrom">
+							<label>起始时间:</label><input id="datepickerStart" name="timeStart" type="text" width="40">
+							<label>结束时间:</label><input id="datepickerEnd" name="timeEnd" type="text" width="40">
+							<label>图片名称:</label><input name="name" type="text" width="40">
+							<span class="button" id="button-search-images">查询</span>
+						</form>
+					</div>
+				</div>
 			</div>
-			<table id="uploadGrid" class="lztable simple">
-				<thead>
-					<tr>
-						<th></th>
-						<th>图片文件名</th>
-						<!-- <th>本地路径</th> -->
-						<th>上传进度</th>
-						<th>操作</th>
-					</tr>
-				</thead>
-				<tbody></tbody>
-			</table>
-			<form id="uploadImagesForm"
-				enctype="multipart/form-data">
-				<input type="file" id="imageOpen" name="files" accept="image/*"
-					multiple='multiple'  style="display: none;" />
-			</form>
-		</div>
-		<div id="tabs-2">
-			<img id="showImageQuery" class="showImage" alt="无图片" title="请选择需要展示的图片"
-				src="${imagePath}/default_img_02.png">
-			<div id="searchArea" class="searchArea">
-				<form id="searchFrom">
-					<label>起始时间:</label><input id="datepickerStart" name="timeStart" type="text" width="40">
-					<label>结束时间:</label><input id="datepickerEnd" name="timeEnd" type="text" width="40">
-					<label>图片名称:</label><input name="name" type="text" width="40">
-					<span class="button" id="button-search-images">查询</span>
-				</form>
-			</div>
-			<table id="queryGrid"></table>
+			
+			<table id="queryGrid" class="full line-item"></table>
 			<div id="queryGridPager"></div>
+		</div>
+		<div class="img-ui-panel-item panel-east">
+				<img id="showImageQuery" class="line-item showImage" alt="无图片" title="请选择需要展示的图片"/><%-- src="${imagePath}/default_img_02.png" --%>
+		</div>
+		<div class="img-ui-panel-item panel-bottom">
 		</div>
 	</div>
 	<span id="remoteUrlSpan"></span>

@@ -45,11 +45,9 @@ $(document).ready(function() {
 
 
 function initQueryWindow() {
-	$("#searchArea").width($("#gbox_queryGrid").width());
-	
 	var startDateTextBox = $('#datepickerStart');
 	var endDateTextBox = $('#datepickerEnd');
-	$.timepicker.setDefaults({controlType: myControl});
+	//$.timepicker.setDefaults({controlType: myControl});
 	$.timepicker.datetimeRange(
 		startDateTextBox,
 		endDateTextBox,
@@ -107,7 +105,7 @@ function initQueryTable($table) {
 					name : 'name',
 					index : 'name',
 					width : 250,
-					align : 'center',
+					align : 'left',
 				}, {
 					name : 'fileSize',
 					index : 'fileSize',
@@ -193,6 +191,11 @@ function initQueryTable($table) {
 					search : '_search'
 				}
 			});
+	// 调整宽度
+//	$table.setGridWidth($(window).width()*0.6);
+//	$table.setGridWidth(document.body.clientWidth*0.6);
+	var width = $("#accordion").width();
+	$table.setGridWidth(width);
 	// 工具栏
 	$table.navGrid('#queryGridPager', {
 		refresh : false,

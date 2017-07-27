@@ -85,12 +85,23 @@ public class ImageUploadController implements Serializable {
 			}
 		}
 		if (msg.isSuccess()) {
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put(batchId + "image_upload_thread_list", ths);
-			map.put(batchId + "image_upload_image_list", infors);
-			model.addAttribute("UploadProcess", map);
-			for (InputStreamSaveThread th : ths) {
-				th.save();
+			// 不再缓存进度
+			//Map<String, Object> map = new HashMap<String, Object>();
+			//map.put(batchId + "image_upload_thread_list", ths);
+			//map.put(batchId + "image_upload_image_list", infors);
+			//model.addAttribute("UploadProcess", map); 
+			
+			try {
+				for (int i = 0; i < infors.size(); i++) {
+					InputStreamSaveThread th = ths.get(i);
+					ImageInfor infor = infors.get(i);
+					th.save(true); // 同步保存文件
+					// 写入数据库
+					imageService.insert(infor);
+				}
+			} catch (Exception e) {
+				logger.error("数据写入失败", e);
+				msg.setMessage(e.getMessage());
 			}
 			msg.setData(infors);
 		}
@@ -100,6 +111,7 @@ public class ImageUploadController implements Serializable {
 	@RequestMapping("/process.do")
 	@ResponseBody
 	@SuppressWarnings("unchecked")
+	@Deprecated
 	public synchronized ResponseMessage submitProcess(@RequestParam("batchId") String batchId,
 			@ModelAttribute("UploadProcess") Map<String, Object> processData, ModelMap model) {
 		logger.info("Process Thread Id:" + Thread.currentThread().getId() + " " + this);

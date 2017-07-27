@@ -194,4 +194,33 @@ function GetPercent(num, total) {
         return "-"; 
     } 
     return total <= 0 ? 0 : (Math.round(num / total * 100)); 
-    } 
+} 
+
+var ImgUiProcess = function(id,width,height) {
+	this.width_ = width;
+	this.height_ = height; 
+	this.id_ = id;
+	this.$process = $("#"+this.id_);
+	this.$bar = 	$("#"+this.id_+" .process-bar");
+	this.$percent = $("#"+this.id_+" .process-percent");
+	this.$describe = $("#"+this.id_+" .process-describe");
+	
+	this.init = function() {
+		this.$bar.progressbar({
+			value : 0
+		});
+		this.$percent.text("0%");
+		this.$describe.text("-");
+	};
+	
+	this.updateProcess = function(loaded,total) {
+		var per = Math.floor( 100 * loaded / total);
+		this.$bar.progressbar({
+	        value : per
+		});
+		this.$percent.text(per+"%");
+		var loadedKb = Math.round(loaded/1024);
+		var totalKb = Math.round(total/1024);
+		this.$describe.text(loadedKb+"kb/"+totalKb+"kb");
+	};
+}
