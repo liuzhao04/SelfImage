@@ -114,6 +114,8 @@ td a{
 	width: 300px;
 	height: 24px;
 }
+#parent{width:550px; height:10px; border:2px solid #09F;} 
+#son{width:0; height:100%; background-color:#09F; text-align:center; line-height:10px; font-size:20px; font-weight:bold;} 
 </style>
 
 <script type="text/javascript">
@@ -160,8 +162,26 @@ td a{
             error : function(e)
             {
                 SPopupBox.alert("上传失败：" + e);
+            },
+            xhr : function() {
+            	var xhr = $.ajaxSettings.xhr();
+				if(onprogress && xhr.upload) {
+					xhr.upload.addEventListener("progress" , onprogress, false);
+					return xhr;
+				}
             }
         });
+    }
+    
+   
+   	// 上传进度处理
+    function onprogress(evt) {
+   		debugger
+    	var loaded = evt.loaded;     //已经上传大小情况 
+    	var tot = evt.total;      	 //附件总大小 
+    	var per = Math.floor( 100 * loaded / tot);  
+    	$("#son").html( per +"%" );
+    	$("#son").css("width" , per +"%");
     }
 
     function getStatus(batchId)
@@ -236,6 +256,8 @@ td a{
         $("#queryImageMenu").on('click',function(){
             reloadQueryGrid();
         });
+        
+        initUploadForm();
     }
 </script>
 </head>
@@ -272,10 +294,10 @@ td a{
 				</thead>
 				<tbody></tbody>
 			</table>
-			<form id="uploadImagesForm" method="post"
+			<form id="uploadImagesForm"
 				enctype="multipart/form-data">
 				<input type="file" id="imageOpen" name="files" accept="image/*"
-					multiple='multiple' " style="display: none;" />
+					multiple='multiple'  style="display: none;" />
 			</form>
 		</div>
 		<div id="tabs-2">

@@ -23,7 +23,7 @@ public interface IImageService
      * @param imageInfor
      * @return
      */
-	public Page list(ImageInfor imageInfor);
+	public Page listByPage(ImageInfor imageInfor);
 
 	/**
 	 * 图片删除

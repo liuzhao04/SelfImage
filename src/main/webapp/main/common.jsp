@@ -33,6 +33,7 @@
 <script src="${scriptPath}/jquery/jquery-ui.min.js" type="text/javascript"></script>
 <script src="${scriptPath}/jquery/jquery.serialize.js" type="text/javascript"></script>
 <script src="${scriptPath}/jquery/jquery-ui-timepicker-addon.min.js" type="text/javascript"></script>
+<script src="${scriptPath}/jquery/jquery.form.js" type="text/javascript"></script>
 
 <script src="${scriptPath}/ajaxfileupload.js" type="text/javascript"></script>
 <script src="${scriptPath}/common/tooltip.js" type="text/javascript"></script>

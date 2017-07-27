@@ -153,7 +153,7 @@ public class ImageUploadController implements Serializable {
 	@RequestMapping("/initTable.do")
 	@ResponseBody
 	public ResponseMessage initTable(ImageInfor imageInfor) {
-		Page rs = imageService.list(imageInfor);
+		Page rs = imageService.listByPage(imageInfor);
 		ResponseMessage msg = new ResponseMessage(rs);
 		msg.setData(rs.getData());
 		return msg;
@@ -164,7 +164,7 @@ public class ImageUploadController implements Serializable {
 	public ResponseMessage delImage(ImageInfor imageInfor) {
 		ResponseMessage msg = new ResponseMessage();
 		try {
-			Page page = imageService.list(imageInfor);
+			Page page = imageService.listByPage(imageInfor);
 			if (page.getData().size() < 0) {
 				msg.setSuccess(false);
 				msg.setMessage("指定图片不存在");
@@ -201,7 +201,7 @@ public class ImageUploadController implements Serializable {
 				ImageInfor imageInfor = new ImageInfor();
 				imageInfor.setImageId(Long.parseLong(imageId));
 
-				Page page = imageService.list(imageInfor);
+				Page page = imageService.listByPage(imageInfor);
 				if (page.getData().size() < 0) {
 					msg.setSuccess(false);
 					msg.setMessage("指定图片不存在:"+imageId);
