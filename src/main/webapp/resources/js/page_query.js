@@ -222,11 +222,13 @@ function initQueryTable($table) {
 		img.src = src;
 		img.name = name;
 		img.url = JS_HOST + src;
-		img.tags = "aaaa,bbbb";
+		img.labels = ["aaaa","bbbb","ccc","aaaa","bbbb","ccc","aadafdsafdafdssdasfdsafaa","bbaaaaabb","caaaaaacc","bbaaaaabb","caaaaaacc"];
 		showImage(img)
 		return true;
 	});
 }
+
+var isDetailOpen = false;
 
 /**
  * 显示图片
@@ -236,6 +238,50 @@ function initQueryTable($table) {
 function showImage(img) {
 	$("#showImageQuery").attr('src', img.src);
 	$("#showImageQuery").attr('title', img.name);
+	$("#imageTitle span[tit='icon']").attr("title","展开详情");
+	$("#imageTitle span[tit='title']").text(img.id+". "+img.name);
+	$("#detailPanel #item-link input").val(img.url);
+	
+	$("#item-label span[tit='keywords']").children().remove();
+	$.each(img.labels,function(i,keyword) {
+		var html = '<span tit="keyword">'+keyword+'</span>';
+		$("#item-label span[tit='keywords']").append(html);
+	});
+	
+	// 界面控制
+	$("#imageTitle span[tit='icon']").addClass("ui-state-default ui-corner-all ui-icon ui-icon-triangle-1-s img-ui-cursor-pointer");
+	$("#imageTitle span[tit='title']").css({
+		"font-size":"14px",
+		"margin-left":"10px"
+	});
+	//isDetailOpen = false;
+	$("#imageTitle [tit='icon']").off("click");
+	$("#imageTitle [tit='icon']").click(function(){
+		if(!isDetailOpen){
+			$("#imageTitle span[tit='icon']").attr("title","收起详情");
+			$("#imageTitle span[tit='icon']").removeClass("ui-icon-triangle-1-s");
+			$("#imageTitle span[tit='icon']").addClass("ui-icon-triangle-1-n");
+			isDetailOpen = true;
+		}else{
+			$("#imageTitle span[tit='icon']").attr("title","展开详情");
+			$("#imageTitle span[tit='icon']").removeClass("ui-icon-triangle-1-n");
+			$("#imageTitle span[tit='icon']").addClass("ui-icon-triangle-1-s");
+			isDetailOpen = false;
+		}
+		$("#detailPanel").slideToggle();
+	});
+}
+
+//从详情中调用拷贝
+function copyUrl() {
+	var url = $("#detailPanel #item-link input").val();
+	$("#remoteUrlSpan").text(url);
+	if (!select("remoteUrlSpan")) {
+		return;
+	}
+	document.execCommand("Copy");
+	window.getSelection().removeAllRanges();
+	SPopupBox.alert("链接已复制到粘贴板");
 }
 
 function imageInit() {
@@ -284,6 +330,7 @@ function copyQueryLink(remoteUrl) {
 	window.getSelection().removeAllRanges();
 	SPopupBox.alert("链接已复制到粘贴板");
 }
+
 
 var delPostData = new Object();
 

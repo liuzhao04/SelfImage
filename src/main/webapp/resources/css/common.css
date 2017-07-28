@@ -105,5 +105,21 @@ body {
 	width:30%;
 }
 
+¡£img-ui-fold-title{
+	text-align: center;
+	font-size: 10px;
+}
+¡£img-ui-fold-title span[tit='title']{
+	margin-left: 20px;
+}
+.img-ui-cursor-pointer{
+	cursor: pointer;
+}
+
+.img-ui-split-line {
+	border-bottom: 1px dotted #88a;	
+}
+
+
 .footer{ height:40px; overflow:hidden; background:#fff; margin:0 auto; clear:both; padding:10px 20px 0;}
 .footer p{ text-align:center; line-height:28px;font-size: 14px;}

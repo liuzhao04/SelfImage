@@ -53,9 +53,42 @@ width:150px;
 #searchFrom input #datepickerStart,#searchFrom input #datepickerEnd {
 width:200px;
 }
-img{
-border: 0;
+.img-ui-imgdetail{
+font-size: 14px;
+display: inline-block;
 }
+.img-ui-imgdetail *{
+	line-height: 35px;
+}
+.img-ui-imgdetail span{
+	margin-left: 10px;
+}
+.img-ui-imgdetail input[type='text']{
+	width:250px;
+	height:23px;
+}
+.img-ui-imgdetail span[tit='title']{
+	display:inline-block;
+	width:76px;
+}
+.img-ui-imgdetail span span[tit='keyword']{
+	display: inline-block;
+	line-height: 25px;
+	margin-bottom: 10px;
+}
+.img-ui-imgdetail span span[tit='keyword']{
+	border: 1px solid #77a;
+	margin-left: 0px;
+	margin-right: 10px;
+	padding-left: 5px;
+	padding-right: 5px;
+}.img-ui-imgdetail span span[tit='keyword'] span{
+	margin-left: 0px;
+}
+.img-ui-imgdetail input {
+	margin-left:10px;
+}
+
 </style>
 
 <script type="text/javascript">
@@ -224,9 +257,19 @@ border: 0;
 		</div>
 		<div class="img-ui-panel-item panel-east">
 				<div class="img-ui-img-border line-item" title="请选择需要展示的图片" >
-				<img id="showImageQuery" /><%-- src="${imagePath}/default_img_02.png" --%>
+					<img id="showImageQuery" /><%-- src="${imagePath}/default_img_02.png" --%>
 				</div>
-				<img/>
+				<div id="imageTitle" class="line-item img-ui-fold-title">
+					<span tit="icon"></span><span tit="title"></span>
+				</div>
+				<div id="detailPanel" class="line-item searchArea" style="display: none;">
+					<div id="item-link" class="img-ui-imgdetail">
+						<span tit="title">图片链接：</span><input type="text" readonly="readonly"/><span title="复制链接" tit="icon" class="ui-state-default ui-corner-all ui-icon ui-icon-copy img-ui-cursor-pointer" onclick="copyUrl()"></span>
+					</div>
+					<div id="item-label" class="img-ui-imgdetail">
+						<span tit="title">关键词：</span><span tit="keywords"></span>
+					</div>
+				</div>
 		</div>
 		<div class="img-ui-panel-item panel-bottom">
 			<div class="footer">
