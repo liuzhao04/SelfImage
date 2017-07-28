@@ -8,6 +8,7 @@
 function tableStriped($table) {
 	$table.find('tr:even').addClass('even').end().find('tr:odd')
 			.addClass('odd');
+	$table.find('tr[role="row"]').css("cursor","pointer");
 }
 
 /**

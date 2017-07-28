@@ -38,9 +38,10 @@ body {
 	margin:0 0 15px 0;
 }
 
-.searchArea *{
+.searchArea label,.searchArea input{
 	margin-left: 10px;
 }
+
 
 .searchArea label{
 	margin: 10px 0px 10px 10px;
@@ -49,10 +50,12 @@ body {
 }
 .searchArea input{
 	margin: 10px 0px 10px 10px;
-	width: 130px;
 	height: 24px;
 }
 
+.searchArea .serarch-title{
+	margin: 10px 0px 10px 10px;
+}
 .img-ui-panel{
 	display: block;
 	width:100%;
@@ -97,11 +100,13 @@ img {
 	width:60%;
 	height:12px;
 	margin-left: 0px;
-	
 }
 .img-ui-process .process-percent{
-	width:60px;
+	width:50px;
 }
 .img-ui-process .process-describe{
 	width:30%;
 }
+
+.footer{ height:40px; overflow:hidden; background:#fff; margin:0 auto; clear:both; padding:10px 20px 0;}
+.footer p{ text-align:center; line-height:28px;font-size: 14px;}

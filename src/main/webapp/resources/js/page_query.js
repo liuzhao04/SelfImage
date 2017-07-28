@@ -54,9 +54,11 @@ function initQueryWindow() {
 		{
 			minInterval: (1000*60*60), // 1hr
 			dateFormat: 'yy-mm-dd', 
-			timeFormat: 'HH:mm',
-			start: {}, // start picker options
-			end: {} // end picker options					
+			timeFormat: 'HH:mm:ss',
+			start: {showSecond:true}, // start picker options
+			end: {
+				showSecond:true,
+			}
 		}
 	);
 	
@@ -165,13 +167,14 @@ function initQueryTable($table) {
 				},
 				loadComplete : function() {
 				},
-				beforeSelectRow : function(rowId) {
-					var currentRow = $table.jqGrid('getRowData', rowId);
-					if (currentRow.remoteUrl) {
-						$("#showImageQuery").attr('src', currentRow.remoteUrl);
-						$("#showImageQuery").attr('title', currentRow.name);
-					}
-					return true;
+				beforeSelectRow : function(rowId,e) {
+					if(e.type == 'click'){
+						debugger
+			              i = $.jgrid.getCellIndex($(e.target).closest('td')[0]),  
+			              cm = $table.jqGrid('getGridParam', 'colModel');  
+			              return (cm[i].name == 'cb'); //当点击的单元格的名字为cb时，才触发选择行事件
+			          }
+					return false;
 				},
 				onPaging : function(pgButton) {
 				    debugger
@@ -212,6 +215,15 @@ function initQueryTable($table) {
 		},
 		position : "first"
 	});
+	$table.on("click", 'tr[role="row"]', function() {
+		var src =  $(this).find('td')[8].title;
+		var name =  $(this).find('td')[4].title;
+		if (src) {
+			$("#showImageQuery").attr('src', src);
+			$("#showImageQuery").attr('title', name);
+		}
+		return true;
+	});
 }
 
 /**
@@ -221,7 +233,6 @@ function initQueryTable($table) {
  * @returns
  */
 function copyQueryLink(remoteUrl) {
-	debugger
 	$("#remoteUrlSpan").text(JS_HOST + remoteUrl);
 	if (!select("remoteUrlSpan")) {
 		return;

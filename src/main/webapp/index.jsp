@@ -51,6 +51,12 @@ td a{
 #parent{width:550px; height:10px; border:2px solid #09F;}
 #son{width:0; height:100%; background-color:#09F; text-align:center; line-height:10px; font-size:20px; font-weight:bold;}
 
+#searchFrom input{
+width:150px;
+}
+#searchFrom input #datepickerStart,#searchFrom input #datepickerEnd {
+width:200px;
+}
 </style>
 
 <script type="text/javascript">
@@ -114,6 +120,7 @@ td a{
     	$("#uploadImagesForm")[0].reset();
     	$("#showImageNames").val("");
     	$process.init();
+    	reloadQueryGrid();
     }
     
    	// 上传进度处理
@@ -162,6 +169,10 @@ td a{
             reloadQueryGrid();
         });
     }
+    
+    function clearInput(id) {
+    	$("#"+id).val(null);
+    }
 </script>
 </head>
 <body>
@@ -176,11 +187,11 @@ td a{
 				<h6>上传</h6>
 				<div>
 					<div class="searchArea">
-						<button id="button-open-images">图片浏览</button>
+						<button id="button-open-images" class="serarch-title">图片浏览</button>
 						<input type="text" id="showImageNames" readonly="true" />
 						<button id="button-upload-images">图片上传</button>
 						<br>
-						<div id="img-upload-process" class="img-ui-process">
+						<div id="img-upload-process" class="img-ui-process serarch-title">
 							<span class="process-bar"></span>
 							<span class="process-percent"></span>
 							<span class="process-describe"></span>
@@ -195,10 +206,12 @@ td a{
 				<div>
 					<div id="searchArea" class="searchArea">
 						<form id="searchFrom">
-							<label>起始时间:</label><input id="datepickerStart" name="timeStart" type="text" width="40">
-							<label>结束时间:</label><input id="datepickerEnd" name="timeEnd" type="text" width="40">
-							<label>图片名称:</label><input name="name" type="text" width="40">
-							<span class="button" id="button-search-images">查询</span>
+							<label>起始时间:</label><input id="datepickerStart" name="timeStart" type="text">
+							<sub><a onclick="clearInput('datepickerStart')" class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-trash"></span></a></sub>
+							<label>结束时间:</label><input id="datepickerEnd" name="timeEnd" type="text">
+							<sub><a onclick="clearInput('datepickerEnd')" class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-trash"></span></a></sub>
+							<label>图片名称:</label><input name="name" type="text">
+							<span class="button serarch-title" id="button-search-images">查询</span>
 						</form>
 					</div>
 				</div>
@@ -211,6 +224,9 @@ td a{
 				<img id="showImageQuery" class="line-item showImage" alt="无图片" title="请选择需要展示的图片"/><%-- src="${imagePath}/default_img_02.png" --%>
 		</div>
 		<div class="img-ui-panel-item panel-bottom">
+			<div class="footer">
+			<p>Copyright &copy;2008 酷比乐·匹克切 Powered By simage Version 1.0.0</p>
+			</div>
 		</div>
 	</div>
 	<span id="remoteUrlSpan"></span>
