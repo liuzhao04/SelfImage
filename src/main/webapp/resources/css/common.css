@@ -42,7 +42,6 @@ body {
 	margin-left: 10px;
 }
 
-
 .searchArea label{
 	margin: 10px 0px 10px 10px;
 	font-size: 14px;
@@ -85,9 +84,9 @@ body {
 	width:100%;
 	float: right;
 }
-
-img {
+.img-ui-img-border{
 	border: 3px solid #eeeeff;
+	text-align: center;
 }
 .img-ui-process{
 	width: 100%;

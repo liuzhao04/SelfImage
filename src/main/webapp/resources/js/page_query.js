@@ -169,7 +169,6 @@ function initQueryTable($table) {
 				},
 				beforeSelectRow : function(rowId,e) {
 					if(e.type == 'click'){
-						debugger
 			              i = $.jgrid.getCellIndex($(e.target).closest('td')[0]),  
 			              cm = $table.jqGrid('getGridParam', 'colModel');  
 			              return (cm[i].name == 'cb'); //当点击的单元格的名字为cb时，才触发选择行事件
@@ -177,7 +176,6 @@ function initQueryTable($table) {
 					return false;
 				},
 				onPaging : function(pgButton) {
-				    debugger
 					var curPage = $table.getGridParam('page');
 				    var totalPage = $table.getGridParam('lastpage');
 				    var pageParam = curPage > totalPage ? totalPage : curPage;
@@ -216,14 +214,59 @@ function initQueryTable($table) {
 		position : "first"
 	});
 	$table.on("click", 'tr[role="row"]', function() {
+		var id =  $(this).find('td')[2].title;
 		var src =  $(this).find('td')[8].title;
 		var name =  $(this).find('td')[4].title;
-		if (src) {
-			$("#showImageQuery").attr('src', src);
-			$("#showImageQuery").attr('title', name);
-		}
+		var img = new Object();
+		img.id = id;
+		img.src = src;
+		img.name = name;
+		img.url = JS_HOST + src;
+		img.tags = "aaaa,bbbb";
+		showImage(img)
 		return true;
 	});
+}
+
+/**
+ * 显示图片
+ * @param img
+ * @returns
+ */
+function showImage(img) {
+	$("#showImageQuery").attr('src', img.src);
+	$("#showImageQuery").attr('title', img.name);
+}
+
+function imageInit() {
+	var twidth = document.body.clientWidth*0.4*0.94;
+	$("#showImageQuery")[0].width = twidth;
+	$("#showImageQuery")[0].height = twidth * 0.75;
+	$("#showImageQuery").on("load",function(aa,bb,cc){
+		var img = new Image();
+		img.src =$(this)[0].src;
+		var parentImage = $(this);
+		img.onload = function() {
+			var twidth = document.body.clientWidth*0.4*0.94
+			var width_ = twidth;
+			var height_ = twidth * 0.75 ;
+			var width = img.width;
+			var height = img.height;
+			var wh = fitSize(width_,height_,width,height);
+			$("#showImageQuery")[0].width = wh[0];
+			$("#showImageQuery")[0].height = wh[1];
+        }
+		function fitSize(widthDst,heightDst,widthImg,heightImg) {
+			var tw = widthImg / widthDst;
+			var th = heightImg / heightDst;
+			var maxFactor = tw > th ? tw : th;
+			var rs = new Array();
+			rs[0] = widthImg / maxFactor;
+			rs[1] = heightImg / maxFactor;
+			return rs;
+		} 
+	});
+	
 }
 
 /**

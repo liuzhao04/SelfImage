@@ -13,10 +13,6 @@
 
 <style type="text/css">
 
-.showImage {
-	height: 300px;
-}
-
 .process {
 	width: 180px;
 	height: 10px;
@@ -57,6 +53,9 @@ width:150px;
 #searchFrom input #datepickerStart,#searchFrom input #datepickerEnd {
 width:200px;
 }
+img{
+border: 0;
+}
 </style>
 
 <script type="text/javascript">
@@ -68,6 +67,7 @@ width:200px;
         initWidow();
         $process = new ImgUiProcess("img-upload-process");
         $process.init();
+        imageInit();
     });
 
     function openImages()
@@ -221,7 +221,10 @@ width:200px;
 			<div id="queryGridPager"></div>
 		</div>
 		<div class="img-ui-panel-item panel-east">
-				<img id="showImageQuery" class="line-item showImage" alt="无图片" title="请选择需要展示的图片"/><%-- src="${imagePath}/default_img_02.png" --%>
+				<div class="img-ui-img-border line-item" title="请选择需要展示的图片" >
+				<img id="showImageQuery" /><%-- src="${imagePath}/default_img_02.png" --%>
+				</div>
+				<img/>
 		</div>
 		<div class="img-ui-panel-item panel-bottom">
 			<div class="footer">
