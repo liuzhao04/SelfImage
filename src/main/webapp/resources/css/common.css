@@ -35,7 +35,6 @@ body {
 .searchArea {
 	overflow: hidden;
 	background: #eeeeff;
-	margin:0 0 15px 0;
 }
 
 .searchArea label,.searchArea input{
@@ -89,7 +88,6 @@ body {
 	text-align: center;
 }
 .img-ui-process{
-	width: 100%;
 	margin-bottom: 5px;
 }
 .img-ui-process *{

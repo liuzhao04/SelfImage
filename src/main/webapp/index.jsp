@@ -132,7 +132,9 @@ border: 0;
     
     function initWidow()
     {
-    	$( "#accordion" ).accordion();
+    	$( "#accordion" ).accordion( {
+    	      heightStyle: "fill"
+        });
         $("#button-open-images").button(
         {
             icon : "ui-icon-folder-open",
