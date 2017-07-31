@@ -27,6 +27,10 @@
 <c:set var="imagePath" value="${contextPath}/resources/images" scope="session"/>
 <c:set var="jspPath" value="${contextPath}/main" scope="session"/>
 
+<c:set var="bootstrapCssPath" value="${cssPath}/bootstrap" scope="session"/>
+<c:set var="fontPath" value="${cssPath}/fonts" scope="session"/>
+<c:set var="bootstrapScriptPath" value="${scriptPath}/bootstrap" scope="session"/>
+
 <script src="${scriptPath}/jquery/jquery-3.2.1.js" type="text/javascript"></script>
 <script src="${scriptPath}/jquery/i18n/grid.locale-cn.js" type="text/javascript"></script>
 <script src="${scriptPath}/jquery/jquery.jqGrid.src.js" type="text/javascript"></script>
