@@ -31,7 +31,8 @@
 <c:set var="fontPath" value="${cssPath}/fonts" scope="session"/>
 <c:set var="bootstrapScriptPath" value="${scriptPath}/bootstrap" scope="session"/>
 
-<script src="${scriptPath}/jquery/jquery-3.2.1.js" type="text/javascript"></script>
+<%-- <script src="${scriptPath}/jquery/jquery-3.2.1.min.js" type="text/javascript"></script> --%>
+<script src="${bootstrapScriptPath}/jquery.min.js"></script>
 <script src="${scriptPath}/jquery/i18n/grid.locale-cn.js" type="text/javascript"></script>
 <script src="${scriptPath}/jquery/jquery.jqGrid.src.js" type="text/javascript"></script>
 <script src="${scriptPath}/jquery/jquery-ui.min.js" type="text/javascript"></script>
@@ -41,7 +42,6 @@
 
 <script src="${scriptPath}/ajaxfileupload.js" type="text/javascript"></script>
 <script src="${scriptPath}/common/tooltip.js" type="text/javascript"></script>
-<script src="${scriptPath}/common/simple-popup-box.js" type="text/javascript"></script>
 <script src="${scriptPath}/common/simple-popup-box.js" type="text/javascript"></script>
 <script src="${scriptPath}/common/jquery-ui-lz-table.js" type="text/javascript"></script>
 <script src="${scriptPath}/common/common.js" type="text/javascript"></script>

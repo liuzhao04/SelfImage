@@ -18,8 +18,7 @@
 
 <link href="${fontPath}/css/font-awesome.min.css" rel="stylesheet">
 
-<script src="${bootstrapScriptPath}/jquery.min.js"></script>
-<script src="${bootstrapScriptPath}//bootstrap.min.js"></script>
+<script src="${bootstrapScriptPath}/bootstrap.min.js"></script>
 <script src="${bootstrapScriptPath}/nprogress.js"></script>
 <script src="${bootstrapScriptPath}/progressbar/bootstrap-progressbar.min.js"></script>
 <script src="${bootstrapScriptPath}/nicescroll/jquery.nicescroll.min.js"></script>
@@ -27,7 +26,6 @@
 <script src="${bootstrapScriptPath}/notify/pnotify.core.js"></script>
 <script src="${bootstrapScriptPath}/notify/pnotify.buttons.js"></script>
 <script src="${bootstrapScriptPath}/notify/pnotify.nonblock.js"></script>
-
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Bootstrap基本学习</title>
@@ -37,80 +35,97 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		Dropzone.options.dropzoneForm = {
-				maxFiles : 5,
-				maxFilesize : 20,
-				parallelUploads : 5, // 每次上传5个，不指定，默认一次只能上传2张
-				paramName : 'files',
-				acceptedFiles : "image/*",
-				autoProcessQueue: false, // 禁止自动上传
-				init: function() {
-					var submitButton = document.querySelector("#submit-all"); // 定义上传按钮
-					var resetButton = document.querySelector("#reset-all"); // 定义上传按钮
-					myDropzone = this; // closure
-					submitButton.addEventListener("click", function() {
-					 	myDropzone.processQueue(); 
-					});
-					// 添加一个文件时触发
-				  	this.on("addedfile", function(file) {
-				  		var count = 0;
-				  		$.each(myDropzone.files,function(i,ifile){
-				  			if(file.name == ifile.name) {
-				  				count++;
-				  			}
-				  		});
-				  		
-				  		if(count > 1) {
-				  			// 发送消息提示
-			  				new PNotify({
-	                            title: 'Warning',
-	                            text: '不能导入同名文件：'+file.name,
-	                            type: 'info'
-	                        });
-			  				// 删除当前文件
-			  				myDropzone.removeFile(file);
-			  				return;
-				  		}
-				  		
-				  		// 为张选择的图片添加一个删除按钮
-				        var removeButton = Dropzone.createElement('<span class="img-ui-cursor-pointer glyphicon glyphicon-remove" aria-hidden="true" style="float:right;"></span>');
-				        var _this = this;
-				        removeButton.addEventListener("click", function(e) {
-				          e.preventDefault();
-				          e.stopPropagation();
-				          _this.removeFile(file);
-				        });
-				        $(file.previewElement).append(removeButton);
-				  	});
-					// 文件数量超过上限
-					this.on("maxfilesexceeded", function(file) {
-						new PNotify({
-                            title: 'Warning',
-                            text: '最多选择5个文件：'+file.name,
-                            type: 'info'
-                        });
-						myDropzone.removeFile(file); // 删除已超过上限的文件
-				  	});
-					// 
-					this.on("complete", function(file) {
-						// 完成时，删除'删除按钮'
-						$(file.previewElement).find(".glyphicon-remove").remove();
-				  	});
-				  	
-				  	// 清空事件定义
-				  	$(resetButton).click(function(){
-				  		myDropzone.removeAllFiles(true); // 清空图片
-				  	});
-				}
-		};
-
-		/* $("#dropzoneForm").dropzone({
+	    initUploadPanel();
+	    initQueryPanel();
+	});
+	
+	function initUploadPanel() {
+	    Dropzone.options.dropzoneForm = {
 			maxFiles : 5,
 			maxFilesize : 20,
+			parallelUploads : 5, // 每次上传5个，不指定，默认一次只能上传2张
 			paramName : 'files',
 			acceptedFiles : "image/*",
-		}); */
-	});
+			autoProcessQueue: false, // 禁止自动上传
+			init: function() {
+				var submitButton = document.querySelector("#submit-all"); // 定义上传按钮
+				var resetButton = document.querySelector("#reset-all"); // 定义上传按钮
+				myDropzone = this; // closure
+				submitButton.addEventListener("click", function() {
+				 	myDropzone.processQueue(); 
+				});
+				// 添加一个文件时触发
+			  	this.on("addedfile", function(file) {
+			  		var count = 0;
+			  		$.each(myDropzone.files,function(i,ifile){
+			  			if(file.name == ifile.name) {
+			  				count++;
+			  			}
+			  		});
+			  		
+			  		if(count > 1) {
+			  			// 发送消息提示
+		  				new PNotify({
+                            title: 'Warning',
+                            text: '不能导入同名文件：'+file.name,
+                            type: 'info'
+                        });
+		  				// 删除当前文件
+		  				myDropzone.removeFile(file);
+		  				return;
+			  		}
+			  		
+			  		// 为张选择的图片添加一个删除按钮
+			        var removeButton = Dropzone.createElement('<span class="img-ui-cursor-pointer glyphicon glyphicon-remove" aria-hidden="true" style="float:right;"></span>');
+			        var _this = this;
+			        removeButton.addEventListener("click", function(e) {
+			          e.preventDefault();
+			          e.stopPropagation();
+			          _this.removeFile(file);
+			        });
+			        $(file.previewElement).append(removeButton);
+			  	});
+				// 文件数量超过上限
+				this.on("maxfilesexceeded", function(file) {
+					new PNotify({
+                        title: 'Warning',
+                        text: '最多选择5个文件：'+file.name,
+                        type: 'info'
+                    });
+					myDropzone.removeFile(file); // 删除已超过上限的文件
+			  	});
+				// 
+				this.on("complete", function(file) {
+					// 完成时，删除'删除按钮'
+					$(file.previewElement).find(".glyphicon-remove").remove();
+			  	});
+			  	
+			  	// 清空事件定义
+			  	$(resetButton).click(function(){
+			  		myDropzone.removeAllFiles(true); // 清空图片
+			  	});
+			}
+		};
+	}
+	
+	function initQueryPanel(){
+	    var startDateTextBox = $('#datepickerStart');
+		var endDateTextBox = $('#datepickerEnd');
+		//$.timepicker.setDefaults({controlType: myControl});
+		$.timepicker.datetimeRange(
+			startDateTextBox,
+			endDateTextBox,
+			{
+				minInterval: (1000*60*60), // 1hr
+				dateFormat: 'yy-mm-dd', 
+				timeFormat: 'HH:mm:ss',
+				start: {showSecond:true}, // start picker options
+				end: {
+					showSecond:true,
+				}
+			}
+		);
+	}
 </script>
 <!--[if lt IE 9]>
         <script src="../assets/js/ie8-responsive-file-warning.js"></script>
@@ -242,14 +257,14 @@
 	                          <p>支持多文件上传，可拖拽要上传的文件，或单击选择文件</p>
 	                          <form id="dropzoneForm" action="${imageSubmitUrl}" class="dropzone" style="border: 1px solid #e5e5e5; height: 200px; padding: 24px 24px;">
 	                          </form>
-	                          <span id="reset-all" class="btn btn-primary right" style="margin-top: 20px;">清 空</span>
-	                          <span id="submit-all" class="btn btn-primary right" style="margin-top: 20px;">提 交</span>
+	                          <span id="submit-all" class="btn btn-primary left" style="margin-top: 20px;">上 传</span>
+	                          <span id="reset-all" class="btn btn-primary left" style="margin-top: 20px;">清 空</span>
 	                      </div>
 	                  	</div>
 	                 </div>
 	             </div>
 	             <div class="row">
-              		<div class="col-md-12 col-sm-12 col-xs-12">
+              		<div class="col-md-6 col-sm-12 col-xs-6">
 	                	<div class="x_panel">
 	                      <div class="x_title">
 	                          <h2>图片查询<small>我的匹克切，你们在哪？</small></h2>
@@ -260,25 +275,41 @@
 	                          <div class="clearfix"></div>
 	                      </div>
 	                      <div class="x_content">
-	                          <p></p>
-	                          <!-- start pop-over -->
-	                          <div class="bs-example-popovers">
-	                              <button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." data-original-title="" title="">
-	                                  Left
-	                              </button>
-	                              <button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="top" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." data-original-title="" title="">
-	                                  Top
-	                              </button>
-	                              <button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
-	                                  Bottom
-	                              </button>
-	                              <button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="right" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
-	                                  Right
-	                              </button>
-	                          </div>
+	                      	<br>
+									<form id="searchFrom" class="form-horizontal form-label-left input_mask">
+                                        <div class="col-md-6 col-sm-12 col-xs-6 form-group has-feedback">
+                                            <input type="text" class="form-control has-feedback-left" id="datepickerStart" placeholder="起始时间">
+                                            <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12 col-xs-6 form-group has-feedback">
+                                            <input type="text" class="form-control" id="datepickerEnd" placeholder="结束时间">
+                                            <span class="fa fa-calendar form-control-feedback right" aria-hidden="true"></span>
+                                        </div>
+										<div class="col-md-6 col-sm-12 col-xs-6 form-group has-feedback">
+                                            <input type="text" class="form-control has-feedback-left" id="datepickerEnd" placeholder="图片名称">
+                                            <span class="fa fa-wordpress form-control-feedback left" aria-hidden="true"></span>
+                                        </div>
+                                        <div class="col-md-2 col-sm-4 col-xs-2 form-group has-feedback">
+                                            <Button class="fa fa-wordpress form-control right" id="queryBtn">&nbsp;&nbsp;查  询
+                                        </div>
+									</form>
 	                      </div>
 	                  	</div>
 	                 </div>
+	                 <div class="col-md-6 col-sm-12 col-xs-6">
+	                	<div class="x_panel">
+	                      <div class="x_title">
+	                          <h2>图片预览区<small></small></h2>
+	                          <ul class="nav navbar-right panel_toolbox">
+	                              <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+	                              </li>
+	                          </ul>
+	                          <div class="clearfix"></div>
+	                      </div>
+	                      <div class="x_content">
+	                      </div>
+	                	</div>
+	                </div>
 	             </div>
               		
               	<div class="clearfix"></div>
