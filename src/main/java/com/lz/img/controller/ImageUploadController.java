@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequest;
 
 import com.lz.common.message.ResponseMessage;
 import com.lz.common.page.Page;
@@ -52,8 +53,16 @@ public class ImageUploadController implements Serializable {
 
 	@RequestMapping("/submit.do")
 	@ResponseBody
-	public ResponseMessage submitImageInfor(@RequestParam("files") List<MultipartFile> files,
+	public ResponseMessage submitImageInfor(
 			HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		// 获取文件列表
+		DefaultMultipartHttpServletRequest mreq = (DefaultMultipartHttpServletRequest)request;
+		Map<String,List<MultipartFile>> fileMap = mreq.getMultiFileMap();
+		List<MultipartFile> files = new ArrayList<MultipartFile>();
+		for(String key : fileMap.keySet()) {
+			files.addAll(fileMap.get(key));
+		}
+		
 		logger.info("Submit Thread Id:" + Thread.currentThread().getId() + " " + this);
 		ResponseMessage msg = new ResponseMessage();
 		msg.setSuccess(true);

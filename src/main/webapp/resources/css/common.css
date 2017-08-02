@@ -120,6 +120,14 @@ body {
 	border-bottom: 1px dotted #88a;	
 }
 
+.img-alpha-background{
+	background:url(../images/alpha.png) repeat fixed;
+	background-position:0px -80px;
+	width:10px;
+	height:20px;
+	overflow: hidden;
+	display: inline-block;
+}
 
 .footer{ height:40px; overflow:hidden; background:#fff; margin:0 auto; clear:both; padding:10px 20px 0;}
 .footer p{ text-align:center; line-height:28px;font-size: 14px;}
