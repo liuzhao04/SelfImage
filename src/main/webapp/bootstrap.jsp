@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 	
 <c:set var="imageSubmitUrl" value="image/submit.do" scope="page"/>
+<c:set var="initTableUrl" value="image/initTable.do" scope="page"/>
 	
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -15,6 +16,9 @@
 <link href="${bootstrapCssPath}/maps/jquery-jvectormap-2.0.1.css" rel="stylesheet" />
 <link href="${bootstrapCssPath}/icheck/flat/green.css" rel="stylesheet" />
 <link href="${bootstrapCssPath}/floatexamples.css" rel="stylesheet" />
+<link href="${bootstrapCssPath}/icheck/flat/green.css" rel="stylesheet">
+<%-- <link href="${bootstrapCssPath}/datatables/css/jquery.dataTables.css" rel="stylesheet"> --%>
+<link href="${bootstrapCssPath}/datatables/tools/css/dataTables.tableTools.css" rel="stylesheet">
 
 <link href="${fontPath}/css/font-awesome.min.css" rel="stylesheet">
 
@@ -26,6 +30,9 @@
 <script src="${bootstrapScriptPath}/notify/pnotify.core.js"></script>
 <script src="${bootstrapScriptPath}/notify/pnotify.buttons.js"></script>
 <script src="${bootstrapScriptPath}/notify/pnotify.nonblock.js"></script>
+<script src="${bootstrapScriptPath}/icheck/icheck.min.js"></script>
+<script src="${bootstrapScriptPath}/datatables/js/jquery.dataTables.min.js"></script>
+<script src="${bootstrapScriptPath}/datatables/tools/js/dataTables.tableTools.js"></script>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Bootstrap基本学习</title>
@@ -38,6 +45,7 @@
 	$(document).ready(function() {
 	    initUploadPanel();
 	    initQueryPanel();
+	    initPictureTab();
 	});
 	
 	function initUploadPanel() {
@@ -198,6 +206,56 @@
 			} 
 		});
 	}
+	
+	function initPictureTab() {
+		var $table = $('#pictureTab');
+		$table.DataTable( {
+	        ajax: {
+				type: 'post',	        	
+	            url: "${initTableUrl}",
+	            data: function(data) {
+	            	data.pageIndex = $table.DataTable().page();
+	            	if(data.pageIndex == 0) {
+	            		data.pageIndex = 1;
+	            	}
+	            	data.pageSize = $table.DataTable().page.len();
+	            	return data;
+	            },
+		        dataSrc : function(result) {  
+		        	debugger
+		        	var $$table = $table.DataTable();
+		        	$$table.page(55);
+		        	$$table.page.len(100);
+					return result.data;	              
+	            }  
+	        },
+	        sort:false,
+	        pagingType: "full_numbers",
+	        paging:true,
+	        //serverSideOption:true,// 开启服务器模式
+	        "processing": true,
+	        "serverSide": true,
+	        columns:[
+	        	CONSTANT_DT.DATA_TABLES.COLUMN.CHECKBOX, {
+	        		title:'图片编号',
+	        		data:'imageId',
+	       		},{
+	       			title:'上传批次',
+	       			data:'batchId',
+	       		},{
+	       			title:'文件名',
+	       			data:'name',
+	       		},{
+	       			title:'文件大小',
+	       			data:'fileSize',
+	       		},{
+	       			title:'操作',
+	       			data:null,
+	       		}]
+	    } );
+	}
+	
+	
 </script>
 <!--[if lt IE 9]>
         <script src="../assets/js/ie8-responsive-file-warning.js"></script>
@@ -405,6 +463,27 @@
                                             <Button class="fa fa-search form-control right btn btn-primary" id="queryBtn">&nbsp;&nbsp;查  询</Button>
                                         </div>
 									</form>
+	                      </div>
+	                  	</div>
+	                 </div>
+	                 
+	             </div>
+	             
+	             <div class="row">
+              		<div class="col-md-12 col-sm-12 col-xs-12">
+	                	<div class="x_panel">
+	                      <div class="x_title">
+	                          <h2>图片列表<small></small></h2>
+	                         <!--  <ul class="nav navbar-right panel_toolbox">
+	                              <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+	                              </li>
+	                          </ul> -->
+	                          <div class="clearfix"></div>
+	                      </div>
+	                      <div class="x_content">
+	                      	<br>
+							<table id="pictureTab" class="table table-striped responsive-utilities jambo_table">
+							</table>
 	                      </div>
 	                  	</div>
 	                 </div>
