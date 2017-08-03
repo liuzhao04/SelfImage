@@ -3,6 +3,7 @@ package com.lz.common.message;
 import java.io.Serializable;
 
 import com.lz.common.page.Page;
+import com.lz.img.pojo.RequestBase;
 
 /**
  * 后台数据返回格式
@@ -31,6 +32,66 @@ public class ResponseMessage implements Serializable
     private Integer count;
 
     private Object userData;
+    
+    private Integer draw;
+
+    private Integer start;
+
+    private Integer length;
+
+    private Integer recordsTotal;
+
+    private Integer recordsFiltered; // 前台过滤条件过滤后的数据
+
+    public Integer getDraw()
+    {
+        return draw;
+    }
+
+    public void setDraw(Integer draw)
+    {
+        this.draw = draw;
+    }
+
+    public Integer getStart()
+    {
+        return start;
+    }
+
+    public void setStart(Integer start)
+    {
+        this.start = start;
+    }
+
+    public Integer getLength()
+    {
+        return length;
+    }
+
+    public void setLength(Integer length)
+    {
+        this.length = length;
+    }
+
+    public Integer getRecordsTotal()
+    {
+        return recordsTotal;
+    }
+
+    public void setRecordsTotal(Integer recordsTotal)
+    {
+        this.recordsTotal = recordsTotal;
+    }
+
+    public Integer getRecordsFiltered()
+    {
+        return recordsFiltered;
+    }
+
+    public void setRecordsFiltered(Integer recordsFiltered)
+    {
+        this.recordsFiltered = recordsFiltered;
+    }
 
     public ResponseMessage()
     {
@@ -44,6 +105,21 @@ public class ResponseMessage implements Serializable
         setPageIndex(page.getPageNo());
         setPageSize(page.getPageSize());
         setPageCount(page.getTotalPage());
+    }
+    
+    public ResponseMessage(Page page,RequestBase base)
+    {
+        setSuccess(true);
+        setCount(page.getTotalCount());
+        setPageIndex(page.getPageNo());
+        setPageSize(page.getPageSize());
+        setPageCount(page.getTotalPage());
+        
+        setStart(base.getStart());
+        setDraw(base.getDraw());
+        setLength(base.getLength());
+        setRecordsTotal(page.getTotalCount());
+        setRecordsFiltered(page.getTotalCount());
     }
 
     
@@ -158,6 +234,16 @@ public class ResponseMessage implements Serializable
                + count
                + ", userData="
                + userData
+               + ", draw="
+               + draw
+               + ", start="
+               + start
+               + ", length="
+               + length
+               + ", recordsTotal="
+               + recordsTotal
+               + ", recordsFiltered="
+               + recordsFiltered
                + "]";
     }
 

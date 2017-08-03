@@ -97,6 +97,13 @@ var CONSTANT_DT = {
 	                orderable : false,  
 	                bSortable : false,  
 	                data : "id",  
+	                width:"20px",
+	                title: "<th>  "+
+	                       '<label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">'+  
+	                       '<input type="checkbox" name="keeperUserGroup-checkable" class="group-checkable" data-set="#sample_1 .checkboxes" />'+  
+	                       "<span></span>"+  
+	                       "</label>"+  
+	                       "</th>  ",
 	                render : function(data, type, row, meta) {  
 	                    var content = '<label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">';  
 	                    content += '    <input type="checkbox" class="group-checkable" value="' + data + '" />';  
@@ -115,3 +122,39 @@ var CONSTANT_DT = {
 	        }  
 	    }  
 	};  
+
+function select(element) {
+    var text = document.getElementById(element);
+    if (document.body.createTextRange) {
+        var range = document.body.createTextRange();
+        range.moveToElementText(text);
+        range.select();
+    } else if (window.getSelection) {
+        var selection = window.getSelection();
+        var range = document.createRange();
+        range.selectNodeContents(text);
+        selection.removeAllRanges();
+        selection.addRange(range);
+    } else {
+        return false;
+    }
+    return true;
+}
+
+/**
+ * 拷贝链接
+ * 
+ * @param remoteUrl
+ * @returns
+ */
+function copyData(data) {
+    if(!$("#copySpan_")[0]){
+        $("body").append("<span id='copySpan_'></span>");
+    }
+    $("#copySpan_").text(data);
+    if (!select("copySpan_")) {
+        return;
+    }
+    document.execCommand("Copy");
+    window.getSelection().removeAllRanges();
+}

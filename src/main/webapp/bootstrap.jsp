@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 	
 <c:set var="imageSubmitUrl" value="image/submit.do" scope="page"/>
-<c:set var="initTableUrl" value="image/initTable.do" scope="page"/>
+<c:set var="initTableUrl" value="image/initDataTable.do" scope="page"/>
 	
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -161,7 +161,7 @@
 			}else{
 				indicatorsHtml +=  '<li data-target="#slidershow" data-slide-to="'+i+'"></li>';
 				innerHtml +=  '<div class="item">' +
-									 '<a href="##"><img id="img_slider_item_'+i+'" style="height: 400px;" src="'+img.remoteUrl+'"></a>'+
+									 '<a href="##"><img id="img_slider_item_'+i+'" style="height: 300px;" src="'+img.remoteUrl+'"></a>'+
 									 '<div class="carousel-caption">'+
 									 '	 <h3>'+img.name+'</h3>'+
 									 '	 <p></p>'+
@@ -214,28 +214,30 @@
 				type: 'post',	        	
 	            url: "${initTableUrl}",
 	            data: function(data) {
-	            	data.pageIndex = $table.DataTable().page();
-	            	if(data.pageIndex == 0) {
-	            		data.pageIndex = 1;
-	            	}
-	            	data.pageSize = $table.DataTable().page.len();
+	                data.pageIndex = data.start /  data.length + 1;
+	            	data.pageSize = data.length ;
 	            	return data;
 	            },
 		        dataSrc : function(result) {  
-		        	debugger
-		        	var $$table = $table.DataTable();
-		        	$$table.page(55);
-		        	$$table.page.len(100);
 					return result.data;	              
 	            }  
 	        },
 	        sort:false,
 	        pagingType: "full_numbers",
 	        paging:true,
-	        //serverSideOption:true,// 开启服务器模式
 	        "processing": true,
-	        "serverSide": true,
-	        columns:[
+	        "serverSide": true,// 开启服务器模式
+	        language : CONSTANT_DT.DATA_TABLES.DEFAULT_OPTION.LANGUAGE,
+	        columns:[{  
+				    data : null,  
+				    bSortable : false,  
+				    targets : 0,  
+				    width : "20px",  
+				    render : function(data, type, row, meta) {  
+				        var startIndex = meta.settings._iDisplayStart;  
+				        return startIndex + meta.row + 1;  
+				    }  
+				}, 
 	        	CONSTANT_DT.DATA_TABLES.COLUMN.CHECKBOX, {
 	        		title:'图片编号',
 	        		data:'imageId',
@@ -249,13 +251,26 @@
 	       			title:'文件大小',
 	       			data:'fileSize',
 	       		},{
+	       			title:'创建时间',
+	       			data:'createTimeStr',
+	       		},{
 	       			title:'操作',
-	       			data:null,
+	       		 	render : function(data, type, full) {  
+	       		    	var html = '<button type="button" class="btn btn-link" onclick="copyLink(\''+full.remoteUrl.replace(/\\/g,'/')+'\')">Copy</button>'; 
+	       		    	return html;
+	       		 	}
 	       		}]
 	    } );
 	}
 	
-	
+	function copyLink(url){
+	    copyData(JS_HOST+url);
+	    new PNotify({
+            title: '系统提示',
+            text: '链接已拷贝到粘贴板',
+            type: 'info'
+        });
+	}
 </script>
 <!--[if lt IE 9]>
         <script src="../assets/js/ie8-responsive-file-warning.js"></script>
@@ -405,8 +420,7 @@
 	                          <div class="clearfix"></div>
 	                      </div>
 	                      <div class="x_content">
-	                      		<span class="img-alpha-background"></span>
-	                      		<div id="slidershow" class="carousel slide col-md-6 col-sm-12 col-xs-6" data-ride="carousel">
+	                      		<div id="slidershow" class="carousel slide col-md-12 col-sm-12 col-xs-12" data-ride="carousel">
 									 <!-- 设置图片轮播的顺序 -->
 									 <ol class="carousel-indicators">
 										 <li class="active" data-target="#slidershow" data-slide-to="0"></li>

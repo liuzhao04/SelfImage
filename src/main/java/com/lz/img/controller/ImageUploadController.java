@@ -180,6 +180,15 @@ public class ImageUploadController implements Serializable {
 		return msg;
 	}
 
+	@RequestMapping("/initDataTable.do")
+	@ResponseBody
+	public ResponseMessage initDataTable(ImageInfor imageInfor) {
+	    Page rs = imageService.listByPage(imageInfor);
+	    ResponseMessage msg = new ResponseMessage(rs,imageInfor);
+	    msg.setData(rs.getData());
+	    return msg;
+	}
+
 	@RequestMapping("/delImage.do")
 	@ResponseBody
 	public ResponseMessage delImage(ImageInfor imageInfor) {
