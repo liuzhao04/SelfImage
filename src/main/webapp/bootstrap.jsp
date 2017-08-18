@@ -110,7 +110,13 @@
 					$(file.previewElement).find(".glyphicon-remove").remove();
 			  	});
 				this.on("successmultiple", function(files,res) {
-					loadImages(res.data);
+					new PNotify({
+                        title: 'Warning',
+                        text: '成功上传'+files.length+"个文件",
+                        type: 'info'
+                    });
+					// 刷新
+					reloadPictureTab();
 			  	});
 			  	
 			  	// 清空事件定义
@@ -124,7 +130,6 @@
 	function initQueryPanel(){
 	    var startDateTextBox = $('#datepickerStart');
 		var endDateTextBox = $('#datepickerEnd');
-		//$.timepicker.setDefaults({controlType: myControl});
 		$.timepicker.datetimeRange(
 			startDateTextBox,
 			endDateTextBox,
@@ -138,73 +143,16 @@
 				}
 			}
 		);
+		$("#queryBtn").click(function() {
+			reloadPictureTab();
+	        return false;
+	    });
 	}
 	
-	var g_imgs;
-	var g_img_src; // 0-从上传结果中加载；1-从查询结构中加载
-	function loadImages(imgs) {
-		g_imgs = imgs;
-		var $showPanel = $("#slidershow");
-		$showPanel.find(".carousel-indicators").children().remove(); // 清空之前的内容
-		$showPanel.find(".carousel-inner").children().remove(); 
-		var indicatorsHtml = "",innerHtml = "";
-		$.each(imgs,function(i,img){
-			if(i == 0) {
-				indicatorsHtml +=  '<li class="active" data-target="#slidershow" data-slide-to="'+i+'"></li>';
-				innerHtml +=  '<div class="item active">' +
-									 '<a href="##"><img id="img_slider_item_'+i+'" style="height: 400px;" src="'+img.remoteUrl+'"></a>'+
-									 '<div class="carousel-caption">'+
-									 '	 <h3>'+img.name+'</h3>'+
-									 '	 <p></p>'+
-								 	 '</div>'+
-								 '</div>';
-			}else{
-				indicatorsHtml +=  '<li data-target="#slidershow" data-slide-to="'+i+'"></li>';
-				innerHtml +=  '<div class="item">' +
-									 '<a href="##"><img id="img_slider_item_'+i+'" style="height: 300px;" src="'+img.remoteUrl+'"></a>'+
-									 '<div class="carousel-caption">'+
-									 '	 <h3>'+img.name+'</h3>'+
-									 '	 <p></p>'+
-								 	 '</div>'+
-								 '</div>';
-			}			
-		});
-		$showPanel.find(".carousel-indicators").append(indicatorsHtml);
-		$showPanel.find(".carousel-inner").append(innerHtml);
-		
-		// 修改图片尺寸
-		$.each(imgs,function(i,img) {
-			fitImgSize('img_slider_item_'+i);
-		});
-	}
-	
-	// 修改图片尺寸
-	function fitImgSize(imgId){
-		var $img = $("#"+imgId);
+	function reloadPictureTab(clear) {
+		var $table = $('#pictureTab');
 		debugger
-		$img.on("load",function(aa,bb,cc){
-			var img = new Image();
-			img.src =$(this)[0].src;
-			var parentImage = $(this);
-			img.onload = function() {
-				var width_ = 800;
-				var height_ = 400 ;
-				var width = img.width;
-				var height = img.height;
-				var wh = fitSize(width_,height_,width,height);
-				$img[0].width = wh[0];
-				$img[0].height = wh[1];
-	        }
-			function fitSize(widthDst,heightDst,widthImg,heightImg) {
-				var tw = widthImg / widthDst;
-				var th = heightImg / heightDst;
-				var maxFactor = tw > th ? tw : th;
-				var rs = new Array();
-				rs[0] = widthImg / maxFactor;
-				rs[1] = heightImg / maxFactor;
-				return rs;
-			} 
-		});
+        $table.dataTable().ajax.reload();
 	}
 	
 	function initPictureTab() {
@@ -222,13 +170,16 @@
 					return result.data;	              
 	            }  
 	        },
-	        sort:false,
+	        //dom: 'Bfrtip',
+            buttons: ['colvis', 'excel', 'print'],
+	        sort: false,
+	        searching: false,// 关闭搜索
 	        pagingType: "full_numbers",
 	        paging:true,
 	        "processing": true,
 	        "serverSide": true,// 开启服务器模式
 	        language : CONSTANT_DT.DATA_TABLES.DEFAULT_OPTION.LANGUAGE,
-	        columns:[{  
+	        columns:[{  // 序号
 				    data : null,  
 				    bSortable : false,  
 				    targets : 0,  
@@ -409,85 +360,10 @@
 	                 </div>
 	             </div>
 	             <div class="row">
-	             	<div class="col-md-12 col-sm-12 col-xs-12">
-	                	<div class="x_panel">
-	                      <div class="x_title">
-	                          <h2>预览<small></small></h2>
-	                          <ul class="nav navbar-right panel_toolbox">
-	                              <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-	                              </li>
-	                          </ul>
-	                          <div class="clearfix"></div>
-	                      </div>
-	                      <div class="x_content">
-	                      		<div id="slidershow" class="carousel slide col-md-12 col-sm-12 col-xs-12" data-ride="carousel">
-									 <!-- 设置图片轮播的顺序 -->
-									 <ol class="carousel-indicators">
-										 <li class="active" data-target="#slidershow" data-slide-to="0"></li>
-									 </ol>
-									 <!-- 设置轮播图片 -->
-									 <div class="carousel-inner">
-										 <div class="item active">
-											 <a href="##"><img style="height: 300px;display: inline-block;"></a>
-											 <div class="carousel-caption">
-												 <h3></h3>
-												 <p></p>
-										 	 </div>
-										 </div>
-									 </div>
-									 <!-- 设置轮播图片控制器 -->
-									 <a class="left carousel-control" href="#slidershow" role="button" data-slide="prev">
-									 	<span class="glyphicon glyphicon-chevron-left"></span>
-									 </a>
-									 <a class="right carousel-control" href="#slidershow" role="button" data-slide="next">
-									 	<span class="glyphicon glyphicon-chevron-right"></span>
-									 </a>
-								</div>
-	                      </div>
-	                	</div>
-	                </div>
-	             </div>
-	             <div class="row">
-              		<div class="col-md-6 col-sm-12 col-xs-6">
-	                	<div class="x_panel">
-	                      <div class="x_title">
-	                          <h2>查询<small>我的匹克切，你们在哪？</small></h2>
-	                          <ul class="nav navbar-right panel_toolbox">
-	                              <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-	                              </li>
-	                          </ul>
-	                          <div class="clearfix"></div>
-	                      </div>
-	                      <div class="x_content">
-	                      	<br>
-									<form id="searchFrom" class="form-horizontal form-label-left input_mask">
-                                        <div class="col-md-6 col-sm-12 col-xs-6 form-group has-feedback">
-                                            <input type="text" class="form-control has-feedback-left" id="datepickerStart" placeholder="起始时间">
-                                            <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
-                                        </div>
-                                        <div class="col-md-6 col-sm-12 col-xs-6 form-group has-feedback">
-                                            <input type="text" class="form-control" id="datepickerEnd" placeholder="结束时间">
-                                            <span class="fa fa-calendar form-control-feedback right" aria-hidden="true"></span>
-                                        </div>
-										<div class="col-md-6 col-sm-12 col-xs-6 form-group has-feedback">
-                                            <input type="text" class="form-control has-feedback-left" id="datepickerEnd" placeholder="图片名称">
-                                            <span class="fa fa-wordpress form-control-feedback left" aria-hidden="true"></span>
-                                        </div>
-                                        <div class="col-md-2 col-sm-4 col-xs-2 form-group has-feedback">
-                                            <Button class="fa fa-search form-control right btn btn-primary" id="queryBtn">&nbsp;&nbsp;查  询</Button>
-                                        </div>
-									</form>
-	                      </div>
-	                  	</div>
-	                 </div>
-	                 
-	             </div>
-	             
-	             <div class="row">
               		<div class="col-md-12 col-sm-12 col-xs-12">
 	                	<div class="x_panel">
 	                      <div class="x_title">
-	                          <h2>图片列表<small></small></h2>
+	                          <h2>图片列表 <small>亲爱的匹克切们，来看你们啦！</small></h2>
 	                         <!--  <ul class="nav navbar-right panel_toolbox">
 	                              <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 	                              </li>
@@ -495,7 +371,27 @@
 	                          <div class="clearfix"></div>
 	                      </div>
 	                      <div class="x_content">
-	                      	<br>
+	                      <form id="searchFrom" class="form-horizontal form-label-left input_mask">
+                                        <div class="col-sm-6 col-md-4 col-xs-4 form-group has-feedback">
+                                            <input type="text" class="form-control has-feedback-left" id="datepickerStart" placeholder="起始时间">
+                                            <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
+                                        </div>
+                                        <div class="col-sm-6 col-md-4 col-xs-4 form-group has-feedback">
+                                            <input type="text" class="form-control" id="datepickerEnd" placeholder="结束时间">
+                                            <span class="fa fa-calendar form-control-feedback right" aria-hidden="true"></span>
+                                        </div>
+										<div class="col-sm-6 col-md-4 col-xs-4 form-group has-feedback">
+                                            <input type="text" class="form-control has-feedback-left" id="datepickerEnd" placeholder="图片名称">
+                                            <span class="fa fa-wordpress form-control-feedback left" aria-hidden="true"></span>
+                                        </div>
+                                        <div class="col-sm-3 col-md-6 col-xs-6 form-group has-feedback">
+                                            <Button class="fa fa-search form-control right btn btn-primary" id="queryBtn">&nbsp;&nbsp;查  询</Button>
+                                        </div>
+                                        <div class="col-sm-3 col-md-6 col-xs-6 form-group has-feedback">
+                                            <Button class="fa fa-eye form-control right btn btn-primary" id="viewBtn">&nbsp;&nbsp;图片浏览</Button>
+                                        </div>
+							</form>
+	                      	
 							<table id="pictureTab" class="table table-striped responsive-utilities jambo_table">
 							</table>
 	                      </div>
